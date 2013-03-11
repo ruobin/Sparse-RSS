@@ -25,7 +25,7 @@
     <string name="menu_enablefeedsort">Besleme sıralamasını etkinleştir</string>
     <string name="menu_disablefeedsort">Besleme sıralamasını devre dışı bırak</string>
 
-    <string name="license_intro">Bu yazılım MIT özgür yazılım lisansı kapsamında yayınlanmıştır ve kaynak kodu şu adreste mevcuttur: http://code.google.com/p/sparserss</string>
+    <string name="license_intro">Bu yazılım MIT özgür yazılım lisansı kapsamında yayınlanmıştır ve kaynak kodu şu adreste mevcuttur: http://code.google.com/p/MiniRSS</string>
 
     <string name="settings_category_refresh">Otomatik tazeleme</string>
     <string name="settings_enabled">Etkin</string>

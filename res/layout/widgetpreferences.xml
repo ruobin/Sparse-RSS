@@ -8,7 +8,7 @@
         android:key="widget.entrycount" 
         android:entries="@array/settings_widget_entrycount"
         android:entryValues="@array/settings_widget_entrycount"/>
-    <de.shandschuh.sparserss.widget.ColorPickerDialogPreference
+    <cn.eric.rss.widget.ColorPickerDialogPreference
         android:title="@string/settings_widgetbackground"
         android:summary="@string/settings_widgetbackground_description"
         android:key="widget.background"

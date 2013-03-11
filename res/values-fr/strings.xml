@@ -26,7 +26,7 @@
     <string name="menu_disablefeedsort">Désactiver le tri des flux</string>
     <string name="menu_share">Partager</string>
 
-    <string name="license_intro">Ce logiciel est distribué sous licence libre MIT et son code source est disponible sur http://code.google.com/p/sparserss</string>
+    <string name="license_intro">Ce logiciel est distribué sous licence libre MIT et son code source est disponible sur http://code.google.com/p/MiniRSS</string>
 
     <string name="settings_category_refresh">Actualisation automatique</string>
     <string name="settings_enabled">Activée</string>

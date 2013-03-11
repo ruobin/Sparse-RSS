@@ -8,7 +8,7 @@
     <string name="contextmenu_delete">消去</string>
     <string name="favorites">お気に入り</string>
 
-    <string name="license_intro">このソフトウェアのライセンスは、MIT　Licenseで公示されており、ソースコードは、http://code.google.com/p/sparserssにある</string>
+    <string name="license_intro">このソフトウェアのライセンスは、MIT　Licenseで公示されており、ソースコードは、http://code.google.com/p/MiniRSSにある</string>
 
     <string name="editfeed_title">フィード編集</string>
     <string name="contextmenu_edit">編集</string>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2010-2012 Stefan Handschuh
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ 
+ 
+ Note for translators: only include the strings that differ from the 
+ English version. Translations will only be included in the Sparse RSS 
+ program, if they are licensed under the MIT license.
+ 
+-->
+<resources>
+    <string name="app_name">Sparse RSS订阅</string>
+    <string name="menu_addfeed">添加订阅</string>
+    <string name="norssfeeds">没有订阅</string>
+    <string name="noentries">没有新鲜事</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="contextmenu_delete">删除</string>
+    <string name="favorites">收藏</string>
+
+    <string name="editfeed_title">编辑订阅</string>
+    <string name="newfeed_title">新建订阅</string>
+    <string name="contextmenu_edit">编辑</string>
+    <string name="contextmenu_refresh">刷新</string>
+    <string name="menu_settings">设置</string>
+    <string name="contextmenu_markasread">标记为已读</string>
+    <string name="contextmenu_markasunread">标记为未读</string>
+    <string name="contextmenu_hideread">隐藏已读条目</string>
+    <string name="contextmenu_showread">显示已读条目</string>
+    <string name="contextmenu_copyurl">将链接复制到剪贴板</string>
+    <string name="contextmenu_deleteread">删除已读条目</string>
+    <string name="contextmenu_deleteallentries">删除所有条目</string>
+    <string name="contextmenu_resetupdatedate">重置更新日期</string>
+    <string name="menu_allread">全部标记为已读</string>
+    <string name="menu_import">从OPML文件导入设置</string>
+    <string name="menu_export">将设置导出到OPML文件</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_enablefeedsort">启用新鲜事排序</string>
+    <string name="menu_disablefeedsort">禁用新鲜事排序</string>
+    <string name="menu_share">分享</string>
+
+    <!-- For translators: you don't need to translate or include the following string -->
+    <string name="license">Copyright &#169; 2010-2012 Stefan Handschuh (handschuh.stefan@googlemail.com)\n\n
+        Translators\n
+         - Dutch: Eelko Berkenpies\n
+         - Spanish: Sergio Martín\n
+         - Russian: Igor Nedoboy\n
+         - Swedish: Lars m
+         \n\nPermission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        \n\n
+        The above copyright notice and this permission notice shall be included in
+        all copies or substantial portions of the Software.
+        \n\n
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        THE SOFTWARE.
+    </string>
+    <string name="contributors_list">Additional contributors (other translations and code):\n\n - a very nice person that wants to be unnamed (French and Turkish translations)\n
+        - another nice unnamed person (Japanese translation)\n
+        - Joel Low (several patches [refresh spinner, UI adjustments and more]); see commit log for details</string>
+    <string name="license_intro">This software is distributed under the MIT open source license and its source code is available under http://code.google.com/p/MiniRSS</string>
+    <string name="contributors"><u>Additional contributors &gt;&gt;</u></string>
+    <string name="license_word"><u>&lt;&lt; License</u></string>
+
+    <string name="settings_category_refresh">自动刷新</string>
+    <string name="settings_enabled">启用</string>
+    <string name="settings_refreshenabled_description">控制所有新鲜事的自动刷新</string>
+    <string name="settings_refreshinterval">刷新间隔</string>
+    <string name="settings_refreshinterval_description">两次自动刷新之间的间隔时间</string>
+
+    <string name="settings_category_notofications">提示</string>
+    <string name="settings_notificationsenabled_description">新鲜事有更新时的提示效果</string>
+    <string name="settings_notificationsringtone">铃声</string>
+    <string name="settings_notificationsringtone_description">选择新鲜事有更新时的铃声</string>
+    <string name="settings_notificationsvibrate">震动</string>
+    <string name="settings_notificationsvibrate_description">新鲜事有更新时是否要震动</string>
+
+    <string name="settings_category_contentpresentation">内容展示</string>
+    <string name="settings_prioritize">未读内容优先</string>
+    <string name="settings_prioritize_description">将未读内容显示在已读内容的上方</string>
+    <string name="settings_keeptime">新鲜事的保存时间</string>
+    <string name="settings_keeptime_description">比规定时间更旧的新鲜事将被删除</string>
+    <string name="settings_disablepictures">禁用图片</string>
+    <string name="settings_disablepictures_description">不加载或显示任何图片</string>
+    <string name="settings_fetchpictures">下载图片</string>
+    <string name="settings_fetchpictures_description">下载所有图片并保存到本地</string>
+    <string name="settings_lighttheme">清新主题</string>
+    <string name="settings_lighttheme_description">使用淡色调的主题（程序将自动重启）</string>
+    <string name="settings_blacktextwhite">白底黑字</string>
+    <string name="settings_blacktextwhite_description">将新鲜事以白底黑字的风格来显示</string>
+    <string name="settings_fontsize">字体大小</string>
+    <string name="settings_fontsize_description">单条新鲜事的字体大小</string>
+    <string name="settings_gestures">手势</string>
+    <string name="settings_gestures_description">使用手势来切换新鲜事</string>
+
+    <string name="settings_refreshonopen">启动时刷新</string>
+    <string name="settings_refreshonopen_description">打开软件时自动刷新新鲜事</string>
+
+    <string name="settings_overridewifionly">覆盖 \"仅在wifi下刷新\"</string>
+    <string name="settings_overridewifionly_description">允许手动刷新 \"仅在wifi下刷新\" 的新鲜事</string>
+
+    <string name="settings_enclosuredownloadwarning">附件下载警告</string>
+    <string name="settings_enclosuredownloadwarning_description">打开过下载附件时显示警告</string>
+
+    <string name="settings_hideread">隐藏已读新鲜事</string>
+    <string name="settings_hideread_description">隐藏已读新鲜事</string>
+    <string name="settings_entrysettings">新鲜事设置</string>
+    <string name="settings_visiblefeeds">可见的新鲜事</string>
+    <string name="settings_widgetentrycount">新鲜事数量</string>
+    <string name="settings_widgetentrycount_description">显示的新鲜事数量</string>
+    <string name="settings_widgetbackground">背景</string>
+    <string name="settings_widgetbackground_description">背景的颜色和透明度</string>
+    <string name="settings_showtabs">显示标签</string>
+    <string name="settings_showtabs_description"> \"收藏 \"和 \"所有 \"标签</string>
+
+    <string name="settings_category_network">网络</string>
+    <string name="settings_standarduseragent">标准用户代理</string>
+    <string name="settings_standarduseragent_description">使用标准的用户代理名称</string>
+    <string name="settings_httphttpsredirects">采用 http &lt;-&gt; https 重定向</string>
+    <string name="settings_httphttpsredirects_description">自动采用http到https（反之亦然）的重定向</string>
+    <string name="settings_enableefficientfeedparsing">高效新鲜事解析</string>
+    <string name="settings_enableefficientfeedparsing_description">自动停止对过于陈旧的新鲜事进行解析</string>
+    <string name="settings_proxy_wifionly">仅wifi</string>
+    <string name="settings_proxy_wifionly_description">只对wifi应用代理</string>
+    <string name="settings_proxy_host">主机</string>
+    <string name="settings_proxy_port">端口</string>
+    <string name="settings_proxy_type">类型</string>
+
+    <string name="never">从不</string>
+    <string name="update">更新</string>
+    <string name="colon">:\u00A0</string>
+    <string name="unread">未读</string>
+    <string name="newentries">新的新鲜事</string>
+    <string name="rss_feeds">RSS订阅</string>
+    <string name="error">错误</string>
+    <string name="priority">优先级</string>
+    <string name="select_feeds">选择订阅</string>
+    <string name="all_feeds">所有订阅</string>
+    <string name="all">全部</string>
+    <string name="overview">概观</string>
+    <string name="kb">kb</string>
+
+    <string name="error_feederror">订阅的网址无法被访问.</string>
+    <string name="error_feedurlexists">网址已存在.</string>
+    <string name="error_feedimport">选中的文件不能被导入.</string>
+    <string name="error_feedexport">导出失败，请确保您已加载了可写入的SD卡.</string>
+    <string name="error_invalidimportfile">选中的文件无效，无法被导入.</string>
+    <string name="error_externalstoragenotavailable">SD卡不可用.</string>
+
+    <string name="feed_url">网址</string>
+    <string name="optional">(可选)</string>
+    <string name="websiteorfeed">(网站或订阅)</string>
+    <string name="feed_title">标题</string>
+    <string name="select_file">选择文件 (SD-root)</string>
+    <string name="refreshonwifionly">仅在wifi下刷新</string>
+    <string name="changelog">变更日志</string>
+
+    <string name="red">红</string>
+    <string name="green">绿</string>
+    <string name="blue">蓝</string>
+    <string name="transparency">透明度</string>
+
+    <string name="contextmenu_settings">其他设置</string>
+    <string name="feed_other_alert_ringtone">自定义订阅铃声</string>
+    <string name="feed_other_alert_ringtone_on">启用: 使用下面定义的铃声</string>
+    <string name="feed_other_alert_ringtone_off">禁用: 使用设置中定义的铃声</string>
+    <string name="feed_alert_ringtone">选择铃声</string>
+    <string name="feed_skip_alert">略过提醒</string>
+    <string name="feed_skip_alert_on">启用: 有新鲜事时不提示</string>
+    <string name="feed_skip_alert_off">禁用: 有新鲜事时提示</string>
+
+    <string name="question_deletefeed">Do you really want to delete this feed and all of its entries?</string>
+    <string name="question_refreshwowifi">Do you really want to refresh this feed while not being on wifi?</string>
+    <string name="question_areyousure">Are you sure?</string>
+    <string name="question_playenclosure">Do you want to download and play the file %1$s of alleged size of %2$s?\nThis may cause a lot of traffic!</string>
+
+    <string name="warning_moretraffic">Disabling this option causes  more traffic.</string>
+
+    <string name="button_accept">Accept</string>
+    <string name="button_decline">Decline</string>
+    <string name="button_alwaysokforall">Always ok for all</string>
+
+    <string name="message_exportedto">Exported into %s.</string>
+
+    <string name="dialog_licenseagreement">License</string>
+    <string name="dialog_hint">Hint</string>
+
+    <string-array name="settings_intervals">
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>1 day</item>
+    </string-array>
+
+    <string-array name="settings_keeptimes">
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>4 days</item>
+        <item>1 week</item>
+        <item>2 weeks</item>
+        <item>1 month</item>
+        <item>2 months</item>
+        <item>3 months</item>
+        <item>Forever</item>
+    </string-array>
+
+    <string-array name="settings_fontsizes">
+        <item>Standard</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+3</item>
+    </string-array>
+
+    <string-array name="settings_proxytypes_names">
+        <item>HTTP</item>
+        <item>SOCKS</item>
+    </string-array>
+
+    <string name="permission_readfeeds">Read feed data</string>
+    <string name="permission_readfeeds_description">Allows the application to read Sparse RSS feeds and entries.</string>
+    <string name="permission_writefeeds">Write feed data</string>
+    <string name="permission_writefeeds_description">Allows the application to write Sparse RSS feeds and entries.</string>
+</resources>

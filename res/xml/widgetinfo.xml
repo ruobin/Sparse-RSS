@@ -4,4 +4,4 @@
     android:minHeight="147dp"
     android:updatePeriodMillis="0"
     android:initialLayout="@layout/homescreenwidget"
-    android:configure="de.shandschuh.sparserss.widget.WidgetConfigActivity"/>
+    android:configure="cn.eric.rss.widget.WidgetConfigActivity"/>

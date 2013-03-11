@@ -28,7 +28,7 @@
     <string name="menu_disablefeedsort">Завершить</string>
     <string name="menu_share">Отправить</string>
 
-    <string name="license_intro">This software is distributed under the MIT open source license and its source code is available under http://code.google.com/p/sparserss</string>
+    <string name="license_intro">This software is distributed under the MIT open source license and its source code is available under http://code.google.com/p/MiniRSS</string>
     <string name="contributors"><u>Также участвовали &gt;&gt;</u></string>
     <string name="license_word"><u>&lt;&lt; Лицензия</u></string>
 

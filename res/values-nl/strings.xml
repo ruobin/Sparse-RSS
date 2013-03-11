@@ -23,7 +23,7 @@
     <string name="menu_enablefeedsort">Sorteer activeren</string>
     <string name="menu_disablefeedsort">Sort off</string>
 
-    <string name="license_intro">De software wordt verspreid onder de MIT open source licentie en de broncode is beschikbaar via http://code.google.com/p/sparserss</string>
+    <string name="license_intro">De software wordt verspreid onder de MIT open source licentie en de broncode is beschikbaar via http://code.google.com/p/MiniRSS</string>
 
     <string name="settings_category_refresh">Automatisch vernieuwen</string>
     <string name="settings_enabled">Aan</string>
