@@ -1,5 +1,7 @@
 package cn.eric.rss;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.eric.rss.R;
 import cn.eric.rss.provider.FeedData;
 import android.content.ContentValues;
@@ -63,4 +65,16 @@ public class FeedPrefsActivity extends PreferenceActivity {
 		
 	}
 
+
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPause(this);
+	}
 }

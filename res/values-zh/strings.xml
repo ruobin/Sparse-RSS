@@ -27,7 +27,7 @@
  
 -->
 <resources>
-    <string name="app_name">RSS极速阅读器</string>
+    <string name="app_name">极速RSS</string>
     <string name="menu_addfeed">添加订阅</string>
     <string name="norssfeeds">没有订阅</string>
     <string name="noentries">没有新鲜事</string>
@@ -195,48 +195,48 @@
     <string name="feed_skip_alert_on">启用: 有新鲜事时不提示</string>
     <string name="feed_skip_alert_off">禁用: 有新鲜事时提示</string>
 
-    <string name="question_deletefeed">Do you really want to delete this feed and all of its entries?</string>
-    <string name="question_refreshwowifi">Do you really want to refresh this feed while not being on wifi?</string>
-    <string name="question_areyousure">Are you sure?</string>
-    <string name="question_playenclosure">Do you want to download and play the file %1$s of alleged size of %2$s?\nThis may cause a lot of traffic!</string>
+    <string name="question_deletefeed">您是否要删除此订阅及其所有的新鲜事?</string>
+    <string name="question_refreshwowifi">您确定要在非wifi模式下刷新此订阅吗?</string>
+    <string name="question_areyousure">确定?</string>
+    <string name="question_playenclosure">您确定要下载并运行文件 %1$s （大小为） %2$s?\n这也许会使用很多流量！</string>
 
-    <string name="warning_moretraffic">Disabling this option causes  more traffic.</string>
+    <string name="warning_moretraffic">禁用此选项会使用更多流量.</string>
 
-    <string name="button_accept">Accept</string>
-    <string name="button_decline">Decline</string>
-    <string name="button_alwaysokforall">Always ok for all</string>
+    <string name="button_accept">接受</string>
+    <string name="button_decline">拒绝</string>
+    <string name="button_alwaysokforall">对所有项选择是</string>
 
-    <string name="message_exportedto">Exported into %s.</string>
+    <string name="message_exportedto">导出到 %s.</string>
 
-    <string name="dialog_licenseagreement">License</string>
-    <string name="dialog_hint">Hint</string>
+    <string name="dialog_licenseagreement">许可</string>
+    <string name="dialog_hint">提示</string>
 
     <string-array name="settings_intervals">
-        <item>1 minute</item>
-        <item>5 minutes</item>
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>2 hours</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
+        <item>1分钟</item>
+        <item>5分钟</item>
+        <item>15分钟</item>
+        <item>30分钟</item>
+        <item>1小时</item>
+        <item>2小时</item>
+        <item>6小时</item>
+        <item>12小时</item>
+        <item>1天</item>
     </string-array>
 
     <string-array name="settings_keeptimes">
-        <item>1 day</item>
-        <item>2 days</item>
-        <item>4 days</item>
-        <item>1 week</item>
-        <item>2 weeks</item>
-        <item>1 month</item>
-        <item>2 months</item>
-        <item>3 months</item>
-        <item>Forever</item>
+        <item>1天</item>
+        <item>2天</item>
+        <item>4天</item>
+        <item>1周</item>
+        <item>2周</item>
+        <item>1个月</item>
+        <item>2个月</item>
+        <item>3个月</item>
+        <item>永远</item>
     </string-array>
 
     <string-array name="settings_fontsizes">
-        <item>Standard</item>
+        <item>标准</item>
         <item>+1</item>
         <item>+2</item>
         <item>+3</item>
@@ -247,8 +247,8 @@
         <item>SOCKS</item>
     </string-array>
 
-    <string name="permission_readfeeds">Read feed data</string>
-    <string name="permission_readfeeds_description">Allows the application to read Sparse RSS feeds and entries.</string>
-    <string name="permission_writefeeds">Write feed data</string>
-    <string name="permission_writefeeds_description">Allows the application to write Sparse RSS feeds and entries.</string>
+    <string name="permission_readfeeds">阅读订阅</string>
+    <string name="permission_readfeeds_description">允许应用阅读rss订阅和新鲜事.</string>
+    <string name="permission_writefeeds">操作订阅</string>
+    <string name="permission_writefeeds_description">允许应用操作rss订阅和新鲜事.</string>
 </resources>

@@ -28,6 +28,8 @@ package cn.eric.rss;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -120,6 +122,9 @@ public class RSSOverview extends ListActivity {
 		setContentView(R.layout.main);
 		listAdapter = new RSSOverviewListAdapter(this);
 		setListAdapter(listAdapter);
+		
+		FeedConfigActivity.insertInitialFeeds(this);
+		
 		getListView().setOnCreateContextMenuListener(
 				new OnCreateContextMenuListener() {
 					public void onCreateContextMenu(ContextMenu menu,
@@ -260,7 +265,7 @@ public class RSSOverview extends ListActivity {
 			stopService(new Intent(this, RefreshService.class));
 		}
 		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-				Strings.SETTINGS_REFRESHONPENENABLED, false)) {
+				Strings.SETTINGS_REFRESHONPENENABLED, true)) {
 			new Thread() {
 				public void run() {
 					sendBroadcast(new Intent(Strings.ACTION_REFRESHFEEDS));
@@ -275,6 +280,7 @@ public class RSSOverview extends ListActivity {
 		if (RSSOverview.notificationManager != null) {
 			notificationManager.cancel(0);
 		}
+		MobclickAgent.onResume(this);
 	}
 
 	@Override
@@ -787,6 +793,12 @@ public class RSSOverview extends ListActivity {
 			listAdapter.setFeedSortEnabled(enabled);
 			feedSort = enabled;
 		}
+	}
+	
+	@Override
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPause(this);
 	}
 
 }

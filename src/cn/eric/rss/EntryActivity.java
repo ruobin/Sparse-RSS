@@ -29,6 +29,8 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -362,6 +364,7 @@ public class EntryActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		if (RSSOverview.notificationManager != null) {
 			RSSOverview.notificationManager.cancel(0);
 		}
@@ -710,6 +713,7 @@ public class EntryActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 		if (MainTabActivity.POSTGINGERBREAD) {
 			CompatibilityHelper.onPause(webView);
 		}

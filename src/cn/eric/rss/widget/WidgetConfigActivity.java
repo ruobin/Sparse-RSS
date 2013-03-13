@@ -25,6 +25,8 @@
 
 package cn.eric.rss.widget;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -138,5 +140,16 @@ public class WidgetConfigActivity extends PreferenceActivity {
 		}
 	}
 	
+
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onResume(this);
+	}
 	
+	@Override
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPause(this);
+	}
 }

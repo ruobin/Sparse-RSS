@@ -141,7 +141,7 @@
     <string name="dialog_licenseagreement">License</string>
     <string name="dialog_hint">Tips</string>
 
-    <string-array name="Inställningsintervall">
+    <string-array name="settings_intervals">
         <item>1 minut</item>
         <item>5 minuter</item>
         <item>15 minuter</item>

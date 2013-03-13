@@ -25,6 +25,9 @@
 
 package cn.eric.rss;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -97,6 +100,8 @@ public class MainTabActivity extends TabActivity {
 	    	setTheme(R.style.Theme_Light);
 	    }
 	    super.onCreate(savedInstanceState);
+	    MobclickAgent.updateOnlineConfig(this);
+	    UmengUpdateAgent.update(this.getParent());
 	    
         //We need to display progress information
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -125,8 +130,8 @@ public class MainTabActivity extends TabActivity {
 	@Override
 	protected void onPause()
 	{
-		unregisterReceiver(refreshReceiver);
 		super.onPause();
+		unregisterReceiver(refreshReceiver);
 	}
 	
 	@Override
