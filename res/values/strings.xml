@@ -27,7 +27,7 @@
  
 -->
 <resources>
-    <string name="app_name">Sparse rss</string>
+    <string name="app_name">RSS Quick Reader</string>
     <string name="menu_addfeed">Add feed</string>
     <string name="norssfeeds">No RSS feeds</string>
     <string name="noentries">No entries</string>

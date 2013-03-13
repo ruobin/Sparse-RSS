@@ -76,7 +76,7 @@ public class MainTabActivity extends TabActivity {
 	
 	public static boolean isLightTheme(Context context) {
 		if (LIGHTTHEME == null) {
-			LIGHTTHEME = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Strings.SETTINGS_LIGHTTHEME, false);
+			LIGHTTHEME = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Strings.SETTINGS_LIGHTTHEME, true);
 		}
 		return LIGHTTHEME;
 	}

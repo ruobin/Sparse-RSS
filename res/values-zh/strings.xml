@@ -27,7 +27,7 @@
  
 -->
 <resources>
-    <string name="app_name">Sparse RSS订阅</string>
+    <string name="app_name">RSS极速阅读器</string>
     <string name="menu_addfeed">添加订阅</string>
     <string name="norssfeeds">没有订阅</string>
     <string name="noentries">没有新鲜事</string>
