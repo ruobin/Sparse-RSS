@@ -9,7 +9,10 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="fill"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:background="@color/common_bg_gray"
+        android:cacheColorHint="@color/common_bg_gray"
+        android:divider="@drawable/list_divider"/>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

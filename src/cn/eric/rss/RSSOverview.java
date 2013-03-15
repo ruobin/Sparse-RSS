@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -111,11 +112,11 @@ public class RSSOverview extends ListActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		if (MainTabActivity.isLightTheme(this)) {
-			setTheme(R.style.Theme_Light);
-		}
+//		if (MainTabActivity.isLightTheme(this)) {
+//			setTheme(R.style.Theme_Light);
+//		}
 		super.onCreate(savedInstanceState);
-
+		
 		if (notificationManager == null) {
 			notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		}

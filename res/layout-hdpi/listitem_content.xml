@@ -6,7 +6,8 @@
         android:id="@android:id/text1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="2dip"/>
+        android:layout_marginRight="2dip"
+        android:textColor="@color/content_black"/>
     <TextView
         android:singleLine="true"
         android:layout_below="@android:id/text1"
@@ -14,7 +15,8 @@
         android:layout_marginRight="19dip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@android:id/text2"/>
+        android:id="@android:id/text2"
+        android:textColor="@color/content_black"/>
     <ImageView
         android:layout_alignBottom="@android:id/text2"
         android:layout_alignParentRight="true"

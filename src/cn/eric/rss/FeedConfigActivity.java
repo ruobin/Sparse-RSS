@@ -237,14 +237,17 @@ public class FeedConfigActivity extends Activity {
 			return;
 		}
 		String url, name;
-		url = "http://news.baidu.com/n?cmd=1&class=civilnews&tn=rss";
-		name = "百度新闻（国内）";
-		insertFeed(activity, url, name);
-		url = "http://news.baidu.com/n?cmd=1&class=internews&tn=rss";
-		name = "百度新闻（国外）";
-		insertFeed(activity, url, name);
-		url = "http://news.baidu.com/n?cmd=1&class=housenews&tn=rss";
-		name = "百度新闻（房产）";
+//		url = "http://news.baidu.com/n?cmd=1&class=civilnews&tn=rss";
+//		name = "百度新闻（国内）";
+//		insertFeed(activity, url, name);
+//		url = "http://news.baidu.com/n?cmd=1&class=internews&tn=rss";
+//		name = "百度新闻（国外）";
+//		insertFeed(activity, url, name);
+//		url = "http://news.baidu.com/n?cmd=1&class=housenews&tn=rss";
+//		name = "百度新闻（房产）";
+//		insertFeed(activity, url, name);
+		url = "http://feed.mtime.com/movienews.rss";
+		name = "时光电影新闻";
 		insertFeed(activity, url, name);
 		url = "http://feed.williamlong.info/";
 		name = "月光博客";

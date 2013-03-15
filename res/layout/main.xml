@@ -3,17 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/common_bg_gray">
     <TextView
         android:id="@android:id/empty"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:text="@string/norssfeeds"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="@color/content_black"/>
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="fill"
-        android:drawSelectorOnTop="false"/>
+        android:drawSelectorOnTop="false"
+        android:divider="@drawable/list_divider"/>
 </FrameLayout>

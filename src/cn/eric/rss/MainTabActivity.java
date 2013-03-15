@@ -76,14 +76,7 @@ public class MainTabActivity extends TabActivity {
 	
 	
 	private static Boolean LIGHTTHEME;
-	
-	public static boolean isLightTheme(Context context) {
-		if (LIGHTTHEME == null) {
-			LIGHTTHEME = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Strings.SETTINGS_LIGHTTHEME, true);
-		}
-		return LIGHTTHEME;
-	}
-	
+		
 	private Menu menu;
 	
 	private BroadcastReceiver refreshReceiver = new BroadcastReceiver() {
@@ -96,12 +89,13 @@ public class MainTabActivity extends TabActivity {
 	private boolean hasContent;
 	
 	public void onCreate(Bundle savedInstanceState) {
-		if (isLightTheme(this)) {
-	    	setTheme(R.style.Theme_Light);
-	    }
+//		if (isLightTheme(this)) {
+//	    	setTheme(R.style.Theme_Light);
+//	    }
 	    super.onCreate(savedInstanceState);
 	    MobclickAgent.updateOnlineConfig(this);
-	    UmengUpdateAgent.update(this.getParent());
+	    UmengUpdateAgent.update(this);
+	    UmengUpdateAgent.setUpdateOnlyWifi(false);
 	    
         //We need to display progress information
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);

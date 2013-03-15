@@ -83,9 +83,6 @@ public class EntriesListActivity extends ListActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (MainTabActivity.isLightTheme(this)) {
-			setTheme(R.style.Theme_Light);
-		}
 		
 		super.onCreate(savedInstanceState);
 		

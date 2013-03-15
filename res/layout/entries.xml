@@ -15,5 +15,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="fill"
-        android:drawSelectorOnTop="false"/>
+        android:drawSelectorOnTop="false"
+        android:cacheColorHint="@color/common_bg_gray"
+        android:background="@color/common_bg_gray"
+        android:divider="@drawable/list_divider"/>
 </FrameLayout>

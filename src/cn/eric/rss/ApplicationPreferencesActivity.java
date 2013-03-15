@@ -45,9 +45,6 @@ import cn.eric.rss.service.RefreshService;
 public class ApplicationPreferencesActivity extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (MainTabActivity.isLightTheme(this)) {
-			setTheme(R.style.Theme_Light);
-		}
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.layout.preferences);
 		
@@ -79,20 +76,7 @@ public class ApplicationPreferencesActivity extends PreferenceActivity {
 			}
 		});	
 		
-		preference = (Preference) findPreference(Strings.SETTINGS_LIGHTTHEME);
-		preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				Editor editor = PreferenceManager.getDefaultSharedPreferences(ApplicationPreferencesActivity.this).edit();
 				
-				editor.putBoolean(Strings.SETTINGS_LIGHTTHEME, Boolean.TRUE.equals(newValue));
-				editor.commit();
-				android.os.Process.killProcess(android.os.Process.myPid());
-				
-				// this return statement will never be reached
-				return true;
-			}
-		});
-		
 		preference = (Preference) findPreference(Strings.SETTINGS_EFFICIENTFEEDPARSING);
 		preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(final Preference preference, Object newValue) {
