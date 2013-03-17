@@ -142,7 +142,7 @@
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="anzhi" />
+            android:value="hiapk" />
 
         <service
             android:name="com.umeng.common.net.DownloadingService"

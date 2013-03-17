@@ -1,6 +1,7 @@
-Sparse rss
+rss quick reader
 
 Copyright (c) 2010-2012 Stefan Handschuh
+Copyright (c) 2013-2023 Ruobin Wang
 
 Translators
  - Dutch: Eelko Berkenpies
@@ -11,7 +12,7 @@ Translators
 
 Code-Contributors
  - Joel Low
- - Ruobin Wang
+ - Ruobin Wang(王若斌)
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
