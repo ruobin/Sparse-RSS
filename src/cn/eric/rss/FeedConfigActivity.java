@@ -246,6 +246,15 @@ public class FeedConfigActivity extends Activity {
 //		url = "http://news.baidu.com/n?cmd=1&class=housenews&tn=rss";
 //		name = "百度新闻（房产）";
 //		insertFeed(activity, url, name);
+		url = "http://news.163.com/special/00011K6L/rss_newstop.xml";
+		name = "网易新闻（头条）";
+		insertFeed(activity, url, name);
+		url = "http://news.163.com/special/00011K6L/rss_hotnews.xml";
+		name = "网易新闻（深度）";
+		insertFeed(activity, url, name);
+		url = "http://news.qq.com/newssh/rss_newssh.xml";
+		name = "腾讯社会新闻";
+		insertFeed(activity, url, name);
 		url = "http://feed.mtime.com/movienews.rss";
 		name = "时光电影新闻";
 		insertFeed(activity, url, name);
