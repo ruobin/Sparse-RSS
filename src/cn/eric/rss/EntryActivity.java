@@ -503,15 +503,14 @@ public class EntryActivity extends Activity {
 
 				favorite = entryCursor.getInt(favoritePosition) == 1;
 
-				imageView
-						.setImageResource(favorite ? android.R.drawable.star_on
-								: android.R.drawable.star_off);
+				imageView.setBackgroundResource(favorite ? R.drawable.favorite
+						: R.drawable.not_favorite);
 				imageView.setOnClickListener(new OnClickListener() {
 					public void onClick(View view) {
 						favorite = !favorite;
 						imageView
-								.setImageResource(favorite ? android.R.drawable.star_on
-										: android.R.drawable.star_off);
+								.setBackgroundResource(favorite ? R.drawable.favorite
+										: R.drawable.not_favorite);
 						ContentValues values = new ContentValues();
 
 						values.put(FeedData.EntryColumns.FAVORITE, favorite ? 1

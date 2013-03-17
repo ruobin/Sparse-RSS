@@ -255,6 +255,9 @@ public class FeedConfigActivity extends Activity {
 		url = "http://news.qq.com/newssh/rss_newssh.xml";
 		name = "腾讯社会新闻";
 		insertFeed(activity, url, name);
+		url = "http://comic.qq.com/news/rss_news.xml";
+		name = "腾讯动漫频道";
+		insertFeed(activity, url, name);
 		url = "http://feed.mtime.com/movienews.rss";
 		name = "时光电影新闻";
 		insertFeed(activity, url, name);
