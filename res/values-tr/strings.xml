@@ -71,9 +71,6 @@
     <string name="settings_widgetentrycount_description">Widget üzerinde gösterilecek unsur sayısı</string>
     <string name="settings_widgetbackground">Arka plan</string>
     <string name="settings_widgetbackground_description">Widget arka planının rengi ve şeffaflığı</string>
-    <string name="settings_showtabs">Sekmeleri göster</string>
-    <string name="settings_showtabs_description">Favori ve tüm beslemeler için ek sekmeler</string>
-
     <string name="settings_category_network">Ağ</string>
     <string name="settings_httphttpsredirects">http &lt;-&gt; https yönlendirmelerini izle</string>
     <string name="settings_httphttpsredirects_description">http\'den https\'e ve tersi yönlendirmeleri otomatik olarak izle</string>

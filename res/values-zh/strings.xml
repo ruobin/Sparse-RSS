@@ -136,9 +136,6 @@
     <string name="settings_widgetentrycount_description">显示的新鲜事数量</string>
     <string name="settings_widgetbackground">背景</string>
     <string name="settings_widgetbackground_description">背景的颜色和透明度</string>
-    <string name="settings_showtabs">显示标签</string>
-    <string name="settings_showtabs_description"> \"收藏 \"和 \"所有 \"标签</string>
-
     <string name="settings_category_network">网络</string>
     <string name="settings_standarduseragent">标准用户代理</string>
     <string name="settings_standarduseragent_description">使用标准的用户代理名称</string>

@@ -52,8 +52,6 @@ public final class Strings {
 	
 	public static final String SETTINGS_PRIORITIZE = "contentpresentation.prioritize";
 	
-	public static final String SETTINGS_SHOWTABS = "tabs.show";
-	
 	public static final String SETTINGS_FETCHPICTURES = "pictures.fetch";
 	
 	public static final String SETTINGS_PROXYENABLED = "proxy.enabled";

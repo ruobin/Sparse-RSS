@@ -76,9 +76,6 @@
     <string name="settings_widgetentrycount_description">Antal poster som visas i widgeten</string>
     <string name="settings_widgetbackground">Bakgrund</string>
     <string name="settings_widgetbackground_description">Färg och transparens för widgetens bakgrund</string>
-    <string name="settings_showtabs">Visa tabbar</string>
-    <string name="settings_showtabs_description">Extra tabbar för favorit och alla feedposter</string>
-
     <string name="settings_category_network">Nätverk</string>
     <string name="settings_standarduseragent">Standard användaragent</string>
     <string name="settings_standarduseragent_description">Använd namnet på standard användaragenten</string>

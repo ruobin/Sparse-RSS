@@ -23,7 +23,7 @@
  
  Note for translators: only include the strings that differ from the 
  English version. Translations will only be included in the Sparse RSS 
- program, if they are licensed under the MIT license.
+ program, if they are licensed under the MIT license.
 -->
 <resources>
 
@@ -54,6 +54,8 @@
     <string name="menu_enablefeedsort">Enable feed sort</string>
     <string name="menu_disablefeedsort">Disable feed sort</string>
     <string name="menu_share">Share</string>
+    
+    <string name="pref_maiden_voyage">pref_maiden_voyage</string>
 
     <!-- For translators: you don't need to translate or include the following string -->
     <string name="license">Copyright &#169; 2010-2012 Stefan Handschuh (handschuh.stefan@googlemail.com)\n\n
@@ -127,8 +129,6 @@
     <string name="settings_widgetentrycount_description">Number of entries that are shown in the widget</string>
     <string name="settings_widgetbackground">Background</string>
     <string name="settings_widgetbackground_description">Color and transparency of the widget background</string>
-    <string name="settings_showtabs">Show tabs</string>
-    <string name="settings_showtabs_description">Additional tabs for favorite and all feed-entries</string>
     <string name="settings_category_network">Network</string>
     <string name="settings_standarduseragent">Standard user-agent</string>
     <string name="settings_standarduseragent_description">Use the standard user-agent name</string>

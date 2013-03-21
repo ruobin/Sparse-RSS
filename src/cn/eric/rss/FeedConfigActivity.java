@@ -27,7 +27,9 @@ package cn.eric.rss;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -228,6 +230,13 @@ public class FeedConfigActivity extends Activity {
 	 * @return
 	 */
 	public static void insertInitialFeeds(Activity activity) {
+		
+		if(!isMaidenVoyage(activity)){
+			return;
+		}
+		
+		claimMaidenVoyage(activity);
+		
 		Cursor cursor = activity.getContentResolver().query(
 				FeedData.FeedColumns.CONTENT_URI, null, null, null, null);
 
@@ -257,6 +266,19 @@ public class FeedConfigActivity extends Activity {
 		url = "http://online.wsj.com/xml/rss/3_7085.xml";
 		name = "华尔街日报（世界新闻，英文）";
 		insertFeed(activity, url, name);
+	}
+
+	private static void claimMaidenVoyage(Activity activity) {
+		SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putBoolean(activity.getResources().getString(R.string.pref_maiden_voyage), false);
+		editor.commit();		
+	}
+
+	private static boolean isMaidenVoyage(Activity activity) {
+		SharedPreferences sharedPref =activity.getPreferences(Context.MODE_PRIVATE);
+		boolean isMaidenVoyage = sharedPref.getBoolean(activity.getResources().getString(R.string.pref_maiden_voyage), true);
+		return isMaidenVoyage;
 	}
 
 	private static boolean insertFeed(Activity activity, String url, String name) {

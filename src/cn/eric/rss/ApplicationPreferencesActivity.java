@@ -66,8 +66,7 @@ public class ApplicationPreferencesActivity extends PreferenceActivity {
 			}
 		});
 		
-		preference = (Preference) findPreference(Strings.SETTINGS_SHOWTABS);		
-				
+			
 		preference = (Preference) findPreference(Strings.SETTINGS_EFFICIENTFEEDPARSING);
 		preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(final Preference preference, Object newValue) {

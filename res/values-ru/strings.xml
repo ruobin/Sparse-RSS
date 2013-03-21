@@ -80,8 +80,6 @@
     <string name="settings_widgetentrycount_description">Количество новостей, отображаемых на виджете</string>
     <string name="settings_widgetbackground">Фон</string>
     <string name="settings_widgetbackground_description">Цвет и прозрачность фона виджета</string>
-    <string name="settings_showtabs">Вкладки</string>
-    <string name="settings_showtabs_description">Использовать интерфейс с вкладками</string>
 
     <string name="settings_category_network">Сеть</string>
     <string name="settings_standarduseragent">Сменить user-agent</string>

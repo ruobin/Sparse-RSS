@@ -53,9 +53,6 @@
     <string name="settings_hideread_description">Verberg items in de widget als ze gelezen zijn</string>
     <string name="settings_entrysettings">Artikel instellingen</string>
     <string name="settings_visiblefeeds">Zichtbare feeds</string>
-    <string name="settings_showtabs">Bekijk Tabs</string>
-    <string name="settings_showtabs_description">Additionele tabs voor favorieten en alle feed artikelen</string>
-
     <string name="never">nooit</string>
     <string name="update">Bijwerken</string>
     <string name="unread">ongelezen</string>
