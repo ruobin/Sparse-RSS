@@ -3,3 +3,8 @@ gen/
 authors.txt
 keystore
 
+/.apt_generated
+.settings/
+build.xml
+local.properties
+proguard-project.txt

@@ -43,7 +43,8 @@
         android:allowClearUserData="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:testOnly="false" >
+        android:testOnly="false"
+        android:theme="@style/Theme.Sherlock" >
         <service android:name="cn.eric.rss.service.RefreshService" />
         <service android:name="cn.eric.rss.service.FetcherService" />
 
@@ -55,7 +56,7 @@
 
         <activity android:name="cn.eric.rss.FeedPrefsActivity" />
         <activity
-            android:name="cn.eric.rss.MainTabActivity"
+            android:name="cn.eric.rss.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask" >
             <intent-filter>

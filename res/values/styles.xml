@@ -1,6 +1,13 @@
-<resources>
-    <style name="Theme.Light" parent="android:Theme.Light"/>
-    <style name="ButtonBar" parent="android:ButtonBar"/>
-    <style name="Theme.Dialog" parent="@android:style/Theme.Dialog"/>
-    <style name="Widget.Button.Dialog" parent="@android:style/Widget.Button"/>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Theme.Light" parent="android:Theme.Light" />
+
+    <style name="ButtonBar" parent="android:ButtonBar" />
+
+    <style name="Theme.Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/common_bg_gray</item>
+    </style>
+
+    <style name="Widget.Button.Dialog" parent="@android:style/Widget.Button" />
+
 </resources>

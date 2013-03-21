@@ -66,16 +66,7 @@ public class ApplicationPreferencesActivity extends PreferenceActivity {
 			}
 		});
 		
-		preference = (Preference) findPreference(Strings.SETTINGS_SHOWTABS);
-		preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				if (MainTabActivity.INSTANCE != null ) {
-					MainTabActivity.INSTANCE.setTabWidgetVisible(Boolean.TRUE.equals(newValue));
-				}
-				return true;
-			}
-		});	
-		
+		preference = (Preference) findPreference(Strings.SETTINGS_SHOWTABS);		
 				
 		preference = (Preference) findPreference(Strings.SETTINGS_EFFICIENTFEEDPARSING);
 		preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {

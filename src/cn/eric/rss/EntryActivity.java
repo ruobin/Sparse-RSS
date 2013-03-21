@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.adsmogo.adview.AdsMogoLayout;
 import com.umeng.analytics.MobclickAgent;
 
@@ -76,7 +77,7 @@ import android.widget.ViewFlipper;
 import cn.eric.rss.R;
 import cn.eric.rss.provider.FeedData;
 
-public class EntryActivity extends Activity {
+public class EntryActivity extends SherlockActivityBase {
 	/*
 	 * private static final String NEWLINE = "\n";
 	 * 
@@ -202,9 +203,9 @@ public class EntryActivity extends Activity {
 
 		int titleId = -1;
 
-		if (MainTabActivity.POSTGINGERBREAD) {
+		if (MainActivity.POSTGINGERBREAD) {
 			canShowIcon = true;
-			setContentView(R.layout.entry);
+
 			try {
 				/*
 				 * This is a trick as com.android.internal.R.id.action_bar_title
@@ -216,8 +217,6 @@ public class EntryActivity extends Activity {
 
 			}
 		} else {
-			canShowIcon = requestWindowFeature(Window.FEATURE_LEFT_ICON);
-			setContentView(R.layout.entry);
 			titleId = android.R.id.title;
 		}
 
@@ -260,8 +259,8 @@ public class EntryActivity extends Activity {
 				.getColumnIndex(FeedData.EntryColumns.AUTHOR);
 
 		entryCursor.close();
-		if (RSSOverview.notificationManager == null) {
-			RSSOverview.notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		if (MainActivity.notificationManager == null) {
+			MainActivity.notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		}
 
 		nextButton = (ImageButton) findViewById(R.id.next_button);
@@ -370,6 +369,13 @@ public class EntryActivity extends Activity {
 	}
 
 	@Override
+	protected void onInitUpbar(ActionBar actionBar) {
+		super.onInitUpbar(actionBar);
+		actionBar.setDisplayShowTitleEnabled(true);
+
+	}
+	
+	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		webView.restoreState(savedInstanceState);
@@ -379,12 +385,12 @@ public class EntryActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		MobclickAgent.onResume(this);
-		if (RSSOverview.notificationManager != null) {
-			RSSOverview.notificationManager.cancel(0);
+		if (MainActivity.notificationManager != null) {
+			MainActivity.notificationManager.cancel(0);
 		}
 		uri = getIntent().getData();
 		parentUri = FeedData.EntryColumns.PARENT_URI(uri.getPath());
-		if (MainTabActivity.POSTGINGERBREAD) {
+		if (MainActivity.POSTGINGERBREAD) {
 			CompatibilityHelper.onResume(webView);
 		}
 		reload();
@@ -427,7 +433,8 @@ public class EntryActivity extends Activity {
 				finish();
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
 			} else {
-				setTitle(entryCursor.getString(titlePosition));
+//				setTitle(entryCursor.getString(titlePosition));
+				updateUpbarTitle(entryCursor.getString(titlePosition));
 				if (titleTextView != null) {
 					titleTextView.requestFocus(); // restart ellipsize
 				}
@@ -470,7 +477,7 @@ public class EntryActivity extends Activity {
 												bitmapSizeInDip, false);
 							}
 
-							if (MainTabActivity.POSTGINGERBREAD) {
+							if (MainActivity.POSTGINGERBREAD) {
 								CompatibilityHelper.setActionBarDrawable(this,
 										new BitmapDrawable(bitmap));
 							} else {
@@ -845,7 +852,7 @@ public class EntryActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
-		if (MainTabActivity.POSTGINGERBREAD) {
+		if (MainActivity.POSTGINGERBREAD) {
 			CompatibilityHelper.onPause(webView);
 		}
 		scrollX = webView.getScrollX();
@@ -858,11 +865,11 @@ public class EntryActivity extends Activity {
 		super.onSaveInstanceState(outState);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.entry, menu);
-		return true;
-	}
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// getMenuInflater().inflate(R.menu.entry, menu);
+	// return true;
+	// }
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -948,6 +955,18 @@ public class EntryActivity extends Activity {
 		// 此方法请不要轻易调用，如果调用时间不当，会造成无法统计计数
 		// adsMogoLayoutCode.clearThread();
 		super.onDestroy();
+	}
+
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.entry;
+	}
+	
+
+	@Override
+	public boolean onOptionsItemSelected(
+			com.actionbarsherlock.view.MenuItem menuItem) {
+		return super.onOptionsItemSelected(menuItem);
 	}
 
 }

@@ -77,6 +77,7 @@ public class RSSOverviewListAdapter extends ResourceCursorAdapter {
 	
 	public RSSOverviewListAdapter(Activity activity) {
 		super(activity, R.layout.feedlistitem, activity.managedQuery(FeedData.FeedColumns.CONTENT_URI, null, null, null, null));
+		Cursor cursor=activity.managedQuery(FeedData.FeedColumns.CONTENT_URI, null, null, null, null);
 		nameColumnPosition = getCursor().getColumnIndex(FeedData.FeedColumns.NAME);
 		lastUpdateColumn = getCursor().getColumnIndex(FeedData.FeedColumns.LASTUPDATE);
 		idPosition = getCursor().getColumnIndex(FeedData.FeedColumns._ID);

@@ -60,7 +60,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Xml;
 import cn.eric.rss.BASE64;
-import cn.eric.rss.MainTabActivity;
+import cn.eric.rss.MainActivity;
 import cn.eric.rss.R;
 import cn.eric.rss.Strings;
 import cn.eric.rss.handler.RSSHandler;
@@ -162,7 +162,7 @@ public class FetcherService extends IntentService {
 							
 					Notification notification = new Notification(R.drawable.ic_statusbar_rss, text, System.currentTimeMillis());
 							
-					Intent notificationIntent = new Intent(FetcherService.this, MainTabActivity.class);
+					Intent notificationIntent = new Intent(FetcherService.this, MainActivity.class);
 							
 					PendingIntent contentIntent = PendingIntent.getActivity(FetcherService.this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -223,8 +223,8 @@ public class FetcherService extends IntentService {
 	
 	@Override
 	public void onDestroy() {
-		if (MainTabActivity.INSTANCE != null)
-			MainTabActivity.INSTANCE.setProgressBarIndeterminateVisibility(false);
+		if (MainActivity.INSTANCE != null)
+			MainActivity.INSTANCE.setProgressBarIndeterminateVisibility(false);
 		super.onDestroy();
 	}
 	

@@ -25,8 +25,6 @@
 
 package cn.eric.rss;
 
-import com.umeng.analytics.MobclickAgent;
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -34,11 +32,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-import cn.eric.rss.R;
 import cn.eric.rss.provider.FeedData;
 
 public class FeedConfigActivity extends Activity {
@@ -57,18 +55,20 @@ public class FeedConfigActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.feedsettings);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		this.setContentView(R.layout.feedsettings);
 		setResult(RESULT_CANCELED);
 
 		Intent intent = getIntent();
 
 		nameEditText = (EditText) findViewById(R.id.feed_title);
 		urlEditText = (EditText) findViewById(R.id.feed_url);
-		refreshOnlyWifiCheckBox = (CheckBox) findViewById(R.id.wifionlycheckbox);
-
+		refreshOnlyWifiCheckBox = (CheckBox) findViewById(R.id.wifionlycheckbox);		
+		
+		//add feed dialog
 		if (intent.getAction().equals(Intent.ACTION_INSERT)) {
-			setTitle(R.string.newfeed_title);
+			
 			restoreInstanceState(savedInstanceState);
 			((Button) findViewById(R.id.button_ok))
 					.setOnClickListener(new OnClickListener() {
@@ -117,8 +117,7 @@ public class FeedConfigActivity extends Activity {
 						}
 					});
 		} else {
-			setTitle(R.string.editfeed_title);
-
+			//edit feed dialog
 			if (!restoreInstanceState(savedInstanceState)) {
 				Cursor cursor = getContentResolver().query(intent.getData(),
 						PROJECTION, null, null, null);
@@ -237,15 +236,6 @@ public class FeedConfigActivity extends Activity {
 			return;
 		}
 		String url, name;
-//		url = "http://news.baidu.com/n?cmd=1&class=civilnews&tn=rss";
-//		name = "百度新闻（国内）";
-//		insertFeed(activity, url, name);
-//		url = "http://news.baidu.com/n?cmd=1&class=internews&tn=rss";
-//		name = "百度新闻（国外）";
-//		insertFeed(activity, url, name);
-//		url = "http://news.baidu.com/n?cmd=1&class=housenews&tn=rss";
-//		name = "百度新闻（房产）";
-//		insertFeed(activity, url, name);
 		url = "http://news.163.com/special/00011K6L/rss_newstop.xml";
 		name = "网易新闻（头条）";
 		insertFeed(activity, url, name);
@@ -287,17 +277,4 @@ public class FeedConfigActivity extends Activity {
 		}
 
 	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		MobclickAgent.onResume(this);
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		MobclickAgent.onPause(this);
-	}
-
 }

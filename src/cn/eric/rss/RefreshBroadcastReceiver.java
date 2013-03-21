@@ -28,9 +28,13 @@ package cn.eric.rss;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import cn.eric.rss.R;
 import cn.eric.rss.service.FetcherService;
 
+/**
+ * call the fetch(refresh) service here
+ * @author Ruobin Wang
+ *
+ */
 public class RefreshBroadcastReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
