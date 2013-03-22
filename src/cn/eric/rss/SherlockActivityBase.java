@@ -9,6 +9,7 @@ import android.os.Looper;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -48,7 +49,7 @@ public abstract class SherlockActivityBase extends SherlockActivity {
 	 * 初始化upBar
 	 */
 	protected void onInitUpbar(ActionBar actionBar) {
-		actionBar.setLogo(R.drawable.icon);
+		actionBar.setLogo(R.drawable.ic_logo);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
@@ -77,6 +78,16 @@ public abstract class SherlockActivityBase extends SherlockActivity {
 		}
 	}
 
+
+	protected SubMenu getSubMenu(com.actionbarsherlock.view.Menu menu){
+		SubMenu subMenu = menu.addSubMenu("").setIcon(R.drawable.ic_more);
+
+		subMenu.getItem().setShowAsAction(
+				MenuItem.SHOW_AS_ACTION_ALWAYS
+						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		return subMenu;
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(
 			com.actionbarsherlock.view.MenuItem menuItem) {

@@ -75,7 +75,8 @@
     </style>
     
     <style name="Eric_PopupMenu" parent="@style/Widget.Sherlock.Light.ListPopupWindow">
-        <item name="android:popupBackground">@color/spinner_bg</item>
+        <item name="android:popupBackground">@drawable/button_bg_selector</item>
+
     </style>
 
 </resources>

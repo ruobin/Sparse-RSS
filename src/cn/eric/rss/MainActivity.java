@@ -230,7 +230,9 @@ public class MainActivity extends SherlockActivityBase implements
 
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		SubMenu subMenu = menu.addSubMenu("").setIcon(R.drawable.ic_more);
+		
+		com.actionbarsherlock.view.Menu subMenu=getSubMenu(menu);
+		
 		subMenu.add(0, MenuData.MENUITEM_ADD_FEED, 0, R.string.menu_addfeed);
 		subMenu.add(0, MenuData.MENUITEM_REFRESH, 0, R.string.menu_refresh);
 		subMenu.add(0, MenuData.MENUITEM_SETTINGS, 0, R.string.menu_settings);
@@ -242,9 +244,6 @@ public class MainActivity extends SherlockActivityBase implements
 		subMenu.add(0, MenuData.MENUITEM_EXPORT_TO_OPML, 0,
 				R.string.menu_export);
 
-		subMenu.getItem().setShowAsAction(
-				MenuItem.SHOW_AS_ACTION_ALWAYS
-						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		return true;
 	}
 

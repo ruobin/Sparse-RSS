@@ -41,7 +41,7 @@
     <application
         android:allowBackup="true"
         android:allowClearUserData="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
         android:testOnly="false"
         android:theme="@style/Theme.Sherlock" >
@@ -143,7 +143,7 @@
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="hiapk" />
+            android:value="Umeng" />
 
         <service
             android:name="com.umeng.common.net.DownloadingService"

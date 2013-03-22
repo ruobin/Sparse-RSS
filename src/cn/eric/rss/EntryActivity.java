@@ -820,17 +820,13 @@ public class EntryActivity extends SherlockActivityBase {
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 
-		SubMenu subMenu = menu.addSubMenu("").setIcon(R.drawable.ic_more);
+		com.actionbarsherlock.view.Menu subMenu=getSubMenu(menu);
 
 		subMenu.add(0, MenuData.MENUITEM_COPY_LINK_INTO_CLIPBOARD, 0,
 				R.string.contextmenu_copyurl);
 		subMenu.add(0, MenuData.MENUITEM_SHARE, 0, R.string.menu_share);
 
 		subMenu.add(0, MenuData.MENUITEM_DELETE, 0, R.string.contextmenu_delete);
-
-		subMenu.getItem().setShowAsAction(
-				MenuItem.SHOW_AS_ACTION_ALWAYS
-						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
 		return true;
 	}

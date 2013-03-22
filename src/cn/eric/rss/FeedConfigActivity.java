@@ -76,6 +76,13 @@ public class FeedConfigActivity extends Activity {
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							String url = urlEditText.getText().toString();
+							
+							if(url==null || url.length()<=0){
+								Toast.makeText(FeedConfigActivity.this,
+										R.string.error_feederror,
+										Toast.LENGTH_LONG).show();
+								return;
+							}
 
 							if (!url.startsWith(Strings.HTTP)
 									&& !url.startsWith(Strings.HTTPS)) {

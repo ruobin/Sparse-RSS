@@ -263,9 +263,10 @@ public class EntriesListActivity extends SherlockActivityBase implements
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		SubMenu subMenu = menu.addSubMenu("").setIcon(R.drawable.ic_more);
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {		
 
+		com.actionbarsherlock.view.Menu subMenu=getSubMenu(menu);
+		
 		subMenu.add(0, MenuData.MENUITEM_MARK_AS_READ, 0,
 				R.string.contextmenu_markasread);
 		subMenu.add(0, MenuData.MENUITEM_MARK_AS_UNREAD, 0,
@@ -276,11 +277,9 @@ public class EntriesListActivity extends SherlockActivityBase implements
 		subMenu.add(0, MenuData.MENUITEM_DELETE_ALL_ENTRIES, 0,
 				R.string.contextmenu_deleteallentries);
 
-		subMenu.getItem().setShowAsAction(
-				MenuItem.SHOW_AS_ACTION_ALWAYS
-						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		return true;
 	}
+	
 
 	// @Override
 	// public boolean onCreateOptionsMenu(Menu menu) {
