@@ -47,6 +47,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import cn.eric.rss.R;
 import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.utility.MyStrings;
 
 public class EntriesListAdapter extends ResourceCursorAdapter {
 	private static final int STATE_NEUTRAL = 0;
@@ -150,18 +151,18 @@ public class EntriesListAdapter extends ResourceCursorAdapter {
 
 		imageView.setBackgroundResource(favorite ? R.drawable.favorite
 				: R.drawable.not_favorite);
-		imageView.setTag(favorite ? Strings.TRUE : Strings.FALSE);
+		imageView.setTag(favorite ? MyStrings.TRUE : MyStrings.FALSE);
 		imageView.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				boolean newFavorite = !Strings.TRUE.equals(view.getTag());
+				boolean newFavorite = !MyStrings.TRUE.equals(view.getTag());
 
 				if (newFavorite) {
-					view.setTag(Strings.TRUE);
+					view.setTag(MyStrings.TRUE);
 					imageView.setBackgroundResource(R.drawable.favorite);
 					favorited.add(id);
 					unfavorited.remove(id);
 				} else {
-					view.setTag(Strings.FALSE);
+					view.setTag(MyStrings.FALSE);
 					imageView.setBackgroundResource(R.drawable.not_favorite);
 					unfavorited.add(id);
 					favorited.remove(id);
@@ -175,7 +176,7 @@ public class EntriesListAdapter extends ResourceCursorAdapter {
 						.update(uri,
 								values,
 								new StringBuilder(FeedData.EntryColumns._ID)
-										.append(Strings.DB_ARG).toString(),
+										.append(MyStrings.DB_ARG).toString(),
 								new String[] { Long.toString(id) });
 				context.getContentResolver().notifyChange(
 						FeedData.EntryColumns.FAVORITES_CONTENT_URI, null);
@@ -203,14 +204,14 @@ public class EntriesListAdapter extends ResourceCursorAdapter {
 					dateTextView.setText(new StringBuilder().append(' ')
 							.append(dateFormat.format(date)).append(' ')
 							.append(timeFormat.format(date))
-							.append(Strings.COMMASPACE)
+							.append(MyStrings.COMMASPACE)
 							.append(cursor.getString(feedNameColumn))); // bad
 																		// style
 				} else {
 					dateTextView.setText(new StringBuilder(dateFormat
 							.format(date)).append(' ')
 							.append(timeFormat.format(date))
-							.append(Strings.COMMASPACE)
+							.append(MyStrings.COMMASPACE)
 							.append(cursor.getString(feedNameColumn)));
 				}
 				dateTextView.setCompoundDrawablesWithIntrinsicBounds(
@@ -220,7 +221,7 @@ public class EntriesListAdapter extends ResourceCursorAdapter {
 						null, null, null);
 				dateTextView.setText(new StringBuilder(dateFormat.format(date))
 						.append(' ').append(timeFormat.format(date))
-						.append(Strings.COMMASPACE)
+						.append(MyStrings.COMMASPACE)
 						.append(cursor.getString(feedNameColumn)));
 			}
 
@@ -266,9 +267,9 @@ public class EntriesListAdapter extends ResourceCursorAdapter {
 				null,
 				new StringBuilder(PreferenceManager
 						.getDefaultSharedPreferences(context).getBoolean(
-								Strings.SETTINGS_PRIORITIZE, false) ? SQLREAD
-						: Strings.EMPTY).append(FeedData.EntryColumns.DATE)
-						.append(Strings.DB_DESC).toString());
+								MyStrings.SETTINGS_PRIORITIZE, false) ? SQLREAD
+						: MyStrings.EMPTY).append(FeedData.EntryColumns.DATE)
+						.append(MyStrings.DB_DESC).toString());
 	}
 
 	public void markAsRead() {

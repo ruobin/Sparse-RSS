@@ -78,7 +78,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cn.eric.rss.EntryActivity"
+            android:name="cn.eric.rss.EntryDetailActivity"
             android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

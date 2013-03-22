@@ -55,6 +55,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import cn.eric.rss.provider.FeedData;
 import cn.eric.rss.ui.MenuData;
+import cn.eric.rss.utility.MyStrings;
 
 public class EntriesListActivity extends SherlockActivityBase implements
 		OnItemClickListener {
@@ -324,8 +325,8 @@ public class EntriesListActivity extends SherlockActivityBase implements
 		case MenuData.MENUITEM_DELETE_READ_ENTRIES: {
 			new Thread() { // the delete process takes some time
 				public void run() {
-					String selection = Strings.READDATE_GREATERZERO
-							+ Strings.DB_AND + " (" + Strings.DB_EXCUDEFAVORITE
+					String selection = MyStrings.READDATE_GREATERZERO
+							+ MyStrings.DB_AND + " (" + MyStrings.DB_EXCUDEFAVORITE
 							+ ")";
 
 					getContentResolver().delete(uri, selection, null);
@@ -353,7 +354,7 @@ public class EntriesListActivity extends SherlockActivityBase implements
 							new Thread() {
 								public void run() {
 									getContentResolver().delete(uri,
-											Strings.DB_EXCUDEFAVORITE, null);
+											MyStrings.DB_EXCUDEFAVORITE, null);
 									runOnUiThread(new Runnable() {
 										public void run() {
 											entriesListAdapter.getCursor()

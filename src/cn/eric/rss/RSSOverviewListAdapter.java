@@ -43,6 +43,8 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import cn.eric.rss.R;
 import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.utility.SimpleTask;
+import cn.eric.rss.utility.MyStrings;
 
 public class RSSOverviewListAdapter extends ResourceCursorAdapter {
 	private static final String COUNT_UNREAD = "COUNT(*) - COUNT(readdate)";
@@ -128,7 +130,7 @@ public class RSSOverviewListAdapter extends ResourceCursorAdapter {
 		if (cursor.isNull(errorPosition)) {
 			Date date = new Date(timestamp);
 			
-			updateTextView.setText(new StringBuilder(context.getString(R.string.update)).append(COLON).append(timestamp == 0 ? context.getString(R.string.never) : new StringBuilder(dateFormat.format(date)).append(' ').append(timeFormat.format(date)).append(Strings.COMMASPACE).append(unreadCount).append('/').append(count).append(' ').append(context.getString(R.string.unread))));
+			updateTextView.setText(new StringBuilder(context.getString(R.string.update)).append(COLON).append(timestamp == 0 ? context.getString(R.string.never) : new StringBuilder(dateFormat.format(date)).append(' ').append(timeFormat.format(date)).append(MyStrings.COMMASPACE).append(unreadCount).append('/').append(count).append(' ').append(context.getString(R.string.unread))));
 		} else {
 			updateTextView.setText(new StringBuilder(context.getString(R.string.error)).append(COLON).append(cursor.getString(errorPosition)));
 		}

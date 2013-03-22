@@ -41,6 +41,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import cn.eric.rss.R;
 import cn.eric.rss.service.RefreshService;
+import cn.eric.rss.utility.MyStrings;
 
 public class ApplicationPreferencesActivity extends PreferenceActivity {
 	@Override
@@ -48,7 +49,7 @@ public class ApplicationPreferencesActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.layout.preferences);
 		
-		Preference preference = (Preference) findPreference(Strings.SETTINGS_REFRESHENABLED);
+		Preference preference = (Preference) findPreference(MyStrings.SETTINGS_REFRESHENABLED);
 
 		preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -59,7 +60,7 @@ public class ApplicationPreferencesActivity extends PreferenceActivity {
 						}
 					}.start();
 				} else {
-					getPreferences(MODE_PRIVATE).edit().putLong(Strings.PREFERENCE_LASTSCHEDULEDREFRESH, 0).commit();
+					getPreferences(MODE_PRIVATE).edit().putLong(MyStrings.PREFERENCE_LASTSCHEDULEDREFRESH, 0).commit();
 					stopService(new Intent(ApplicationPreferencesActivity.this, RefreshService.class));
 				}
 				return true;
@@ -67,7 +68,7 @@ public class ApplicationPreferencesActivity extends PreferenceActivity {
 		});
 		
 			
-		preference = (Preference) findPreference(Strings.SETTINGS_EFFICIENTFEEDPARSING);
+		preference = (Preference) findPreference(MyStrings.SETTINGS_EFFICIENTFEEDPARSING);
 		preference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(final Preference preference, Object newValue) {
 				if (newValue.equals(Boolean.FALSE)) {
@@ -79,7 +80,7 @@ public class ApplicationPreferencesActivity extends PreferenceActivity {
 						public void onClick(DialogInterface dialog, int which) {
 							Editor editor = PreferenceManager.getDefaultSharedPreferences(ApplicationPreferencesActivity.this).edit();
 							
-							editor.putBoolean(Strings.SETTINGS_EFFICIENTFEEDPARSING, Boolean.FALSE);
+							editor.putBoolean(MyStrings.SETTINGS_EFFICIENTFEEDPARSING, Boolean.FALSE);
 							editor.commit();
 							((CheckBoxPreference) preference).setChecked(false);
 							dialog.dismiss();

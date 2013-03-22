@@ -48,7 +48,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.Html;
-import cn.eric.rss.Strings;
+import cn.eric.rss.utility.MyStrings;
 import cn.eric.rss.provider.FeedData;
 import cn.eric.rss.provider.FeedDataContentProvider;
 import cn.eric.rss.service.FetcherService;
@@ -139,7 +139,7 @@ public class RSSHandler extends DefaultHandler {
 	
 	private static final String GMT = "GMT";
 	
-	private static final StringBuilder DB_FAVORITE  = new StringBuilder(" AND (").append(Strings.DB_EXCUDEFAVORITE).append(')');
+	private static final StringBuilder DB_FAVORITE  = new StringBuilder(" AND (").append(MyStrings.DB_EXCUDEFAVORITE).append(')');
 
 	private static Pattern imgPattern = Pattern.compile("<img src=\\s*['\"]([^'\"]+)['\"][^>]*>"); // middle () is group 1; s* is important for non-whitespaces; ' also usable
 	
@@ -216,7 +216,7 @@ public class RSSHandler extends DefaultHandler {
 	private boolean nameTagEntered;
 	
 	public RSSHandler(Context context) {
-		KEEP_TIME = Long.parseLong(PreferenceManager.getDefaultSharedPreferences(context).getString(Strings.SETTINGS_KEEPTIME, "4"))*86400000l;
+		KEEP_TIME = Long.parseLong(PreferenceManager.getDefaultSharedPreferences(context).getString(MyStrings.SETTINGS_KEEPTIME, "4"))*86400000l;
 		this.context = context;
 		this.efficientFeedParsing = true;
 	}
@@ -308,8 +308,8 @@ public class RSSHandler extends DefaultHandler {
 			if (authorTagEntered) {
 				return;
 			}
-			if (TAG_ENCLOSURE.equals(attributes.getValue(Strings.EMPTY, ATTRIBUTE_REL))) {
-				startEnclosure(attributes, attributes.getValue(Strings.EMPTY, ATTRIBUTE_HREF));
+			if (TAG_ENCLOSURE.equals(attributes.getValue(MyStrings.EMPTY, ATTRIBUTE_REL))) {
+				startEnclosure(attributes, attributes.getValue(MyStrings.EMPTY, ATTRIBUTE_HREF));
 			} else {
 				entryLink = new StringBuilder();
 				
@@ -352,7 +352,7 @@ public class RSSHandler extends DefaultHandler {
 			descriptionTagEntered = true;
 			description = new StringBuilder();
 		} else if (TAG_ENCLOSURE.equals(localName)) {
-			startEnclosure(attributes, attributes.getValue(Strings.EMPTY, ATTRIBUTE_URL));
+			startEnclosure(attributes, attributes.getValue(MyStrings.EMPTY, ATTRIBUTE_URL));
 		} else if (TAG_GUID.equals(localName)) {
 			guidTagEntered = true;
 			guid = new StringBuilder();
@@ -362,7 +362,7 @@ public class RSSHandler extends DefaultHandler {
 				author = new StringBuilder();
 			} else {
 				// this indicates multiple authors
-				author.append(Strings.COMMASPACE);
+				author.append(MyStrings.COMMASPACE);
 			}
 		} else if (TAG_NAME.equals(localName)) {
 			nameTagEntered = true;
@@ -372,15 +372,15 @@ public class RSSHandler extends DefaultHandler {
 	private void startEnclosure(Attributes attributes, String url) {
 		if (enclosure == null) { // fetch the first enclosure only
 			enclosure = new StringBuilder(url);
-			enclosure.append(Strings.ENCLOSURE_SEPARATOR);
+			enclosure.append(MyStrings.ENCLOSURE_SEPARATOR);
 			
-			String value = attributes.getValue(Strings.EMPTY, ATTRIBUTE_TYPE);
+			String value = attributes.getValue(MyStrings.EMPTY, ATTRIBUTE_TYPE);
 			
 			if (value != null) {
 				enclosure.append(value);
 			}
-			enclosure.append(Strings.ENCLOSURE_SEPARATOR);
-			value = attributes.getValue(Strings.EMPTY, ATTRIBUTE_LENGTH);
+			enclosure.append(MyStrings.ENCLOSURE_SEPARATOR);
+			value = attributes.getValue(MyStrings.EMPTY, ATTRIBUTE_LENGTH);
 			if (value != null) {
 				enclosure.append(value);
 			}
@@ -422,10 +422,10 @@ public class RSSHandler extends DefaultHandler {
 			entryDate = parseUpdateDate(dateStringBuilder.toString());
 			updatedTagEntered = false;
 		} else if (TAG_PUBDATE.equals(localName)) {
-			entryDate = parsePubdateDate(dateStringBuilder.toString().replace(Strings.TWOSPACE, Strings.SPACE));
+			entryDate = parsePubdateDate(dateStringBuilder.toString().replace(MyStrings.TWOSPACE, MyStrings.SPACE));
 			pubDateTagEntered = false;
 		} else if (TAG_LASTBUILDDATE.equals(localName)) {
-			lastBuildDate = parsePubdateDate(dateStringBuilder.toString().replace(Strings.TWOSPACE, Strings.SPACE));
+			lastBuildDate = parsePubdateDate(dateStringBuilder.toString().replace(MyStrings.TWOSPACE, MyStrings.SPACE));
 			lastUpdateDateTagEntered = false;
 		} else if (TAG_DATE.equals(localName)) {
 			entryDate = parseUpdateDate(dateStringBuilder.toString());
@@ -455,7 +455,7 @@ public class RSSHandler extends DefaultHandler {
 				Vector<String> images = null;
 				
 				if (description != null) {
-					String descriptionString = description.toString().trim().replaceAll(Strings.HTML_SPAN_REGEX, Strings.EMPTY);
+					String descriptionString = description.toString().trim().replaceAll(MyStrings.HTML_SPAN_REGEX, MyStrings.EMPTY);
 					
 					if (descriptionString.length() > 0) {
 						if (fetchImages) {
@@ -464,10 +464,10 @@ public class RSSHandler extends DefaultHandler {
 							Matcher matcher = imgPattern.matcher(description);
 							
 							while (matcher.find()) {
-								String match = matcher.group(1).replace(Strings.SPACE, Strings.URL_SPACE);
+								String match = matcher.group(1).replace(MyStrings.SPACE, MyStrings.URL_SPACE);
 								
 								images.add(match);
-								descriptionString = descriptionString.replace(match, new StringBuilder(Strings.FILEURL).append(FeedDataContentProvider.IMAGEFOLDER).append(Strings.IMAGEID_REPLACEMENT).append(match.substring(match.lastIndexOf('/')+1)).toString());
+								descriptionString = descriptionString.replace(match, new StringBuilder(MyStrings.FILEURL).append(FeedDataContentProvider.IMAGEFOLDER).append(MyStrings.IMAGEID_REPLACEMENT).append(match.substring(match.lastIndexOf('/')+1)).toString());
 							}
 						}
 						values.put(FeedData.EntryColumns.ABSTRACT, descriptionString); 
@@ -476,12 +476,12 @@ public class RSSHandler extends DefaultHandler {
 				
 				String enclosureString = null;
 				
-				StringBuilder existanceStringBuilder = new StringBuilder(FeedData.EntryColumns.LINK).append(Strings.DB_ARG);
+				StringBuilder existanceStringBuilder = new StringBuilder(FeedData.EntryColumns.LINK).append(MyStrings.DB_ARG);
 				
 				if (enclosure != null && enclosure.length() > 0) {
 					enclosureString = enclosure.toString();
 					values.put(FeedData.EntryColumns.ENCLOSURE, enclosureString);
-					existanceStringBuilder.append(Strings.DB_AND).append(FeedData.EntryColumns.ENCLOSURE).append(Strings.DB_ARG);
+					existanceStringBuilder.append(MyStrings.DB_AND).append(FeedData.EntryColumns.ENCLOSURE).append(MyStrings.DB_ARG);
 				}
 				
 				String guidString = null;
@@ -489,15 +489,15 @@ public class RSSHandler extends DefaultHandler {
 				if (guid != null && guid.length() > 0) {
 					guidString = guid.toString();
 					values.put(FeedData.EntryColumns.GUID, guidString);
-					existanceStringBuilder.append(Strings.DB_AND).append(FeedData.EntryColumns.GUID).append(Strings.DB_ARG);
+					existanceStringBuilder.append(MyStrings.DB_AND).append(FeedData.EntryColumns.GUID).append(MyStrings.DB_ARG);
 				}
 				
-				String entryLinkString = Strings.EMPTY; // don't set this to null as we need *some* value
+				String entryLinkString = MyStrings.EMPTY; // don't set this to null as we need *some* value
 				
 				if (entryLink != null &&  entryLink.length() > 0) {
 					entryLinkString = entryLink.toString().trim();
-					if (feedBaseUrl != null && !entryLinkString.startsWith(Strings.HTTP) && !entryLinkString.startsWith(Strings.HTTPS)) {
-						entryLinkString = feedBaseUrl + (entryLinkString.startsWith(Strings.SLASH) ? entryLinkString : Strings.SLASH + entryLinkString);
+					if (feedBaseUrl != null && !entryLinkString.startsWith(MyStrings.HTTP) && !entryLinkString.startsWith(MyStrings.HTTPS)) {
+						entryLinkString = feedBaseUrl + (entryLinkString.startsWith(MyStrings.SLASH) ? entryLinkString : MyStrings.SLASH + entryLinkString);
 					}
 				}
 				
@@ -531,7 +531,7 @@ public class RSSHandler extends DefaultHandler {
 								
 								byte[] data = FetcherService.getBytes(new URL(images.get(n)).openStream());
 								
-								FileOutputStream fos = new FileOutputStream(new StringBuilder(FeedDataContentProvider.IMAGEFOLDER).append(entryId).append(Strings.IMAGEFILE_IDSEPARATOR).append(match.substring(match.lastIndexOf('/')+1)).toString());
+								FileOutputStream fos = new FileOutputStream(new StringBuilder(FeedDataContentProvider.IMAGEFOLDER).append(entryId).append(MyStrings.IMAGEFILE_IDSEPARATOR).append(match.substring(match.lastIndexOf('/')+1)).toString());
 								
 								fos.write(data);
 								fos.close();
@@ -637,7 +637,7 @@ public class RSSHandler extends DefaultHandler {
 	}
 	
 	private static String unescapeTitle(String title) {
-		String result = title.replace(Strings.AMP_SG, Strings.AMP).replaceAll(Strings.HTML_TAG_REGEX, Strings.EMPTY).replace(Strings.HTML_LT, Strings.LT).replace(Strings.HTML_GT, Strings.GT).replace(Strings.HTML_QUOT, Strings.QUOT).replace(Strings.HTML_APOSTROPHE, Strings.APOSTROPHE);
+		String result = title.replace(MyStrings.AMP_SG, MyStrings.AMP).replaceAll(MyStrings.HTML_TAG_REGEX, MyStrings.EMPTY).replace(MyStrings.HTML_LT, MyStrings.LT).replace(MyStrings.HTML_GT, MyStrings.GT).replace(MyStrings.HTML_QUOT, MyStrings.QUOT).replace(MyStrings.HTML_APOSTROPHE, MyStrings.APOSTROPHE);
 		
 		if (result.indexOf(ANDRHOMBUS) > -1) {
 			return Html.fromHtml(result, null, null).toString();

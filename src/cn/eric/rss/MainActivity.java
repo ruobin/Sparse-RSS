@@ -40,6 +40,7 @@ import cn.eric.rss.provider.OPML;
 import cn.eric.rss.service.RefreshService;
 import cn.eric.rss.ui.MenuData;
 import cn.eric.rss.utility.ApplicationHelper;
+import cn.eric.rss.utility.MyStrings;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -113,7 +114,7 @@ public class MainActivity extends SherlockActivityBase implements
 		UmengUpdateAgent.setUpdateOnlyWifi(false);
 		INSTANCE = this;
 		if (getPreferences(MODE_PRIVATE).getBoolean(
-				Strings.PREFERENCE_LICENSEACCEPTED, false)) {
+				MyStrings.PREFERENCE_LICENSEACCEPTED, false)) {
 		} else {
 			showDialog(DIALOG_LICENSEAGREEMENT);
 		}
@@ -135,24 +136,24 @@ public class MainActivity extends SherlockActivityBase implements
 		listView.setOnCreateContextMenuListener(this);
 
 		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-				Strings.SETTINGS_REFRESHENABLED, true)) {
+				MyStrings.SETTINGS_REFRESHENABLED, true)) {
 			startService(new Intent(this, RefreshService.class));
 		} else {
 			stopService(new Intent(this, RefreshService.class));
 		}
 
 		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-				Strings.SETTINGS_REFRESHONPENENABLED, true)) {
+				MyStrings.SETTINGS_REFRESHONPENENABLED, true)) {
 			new Thread() {
 				public void run() {
-					sendBroadcast(new Intent(Strings.ACTION_REFRESHFEEDS));
+					sendBroadcast(new Intent(MyStrings.ACTION_REFRESHFEEDS));
 				}
 			}.start();
 		}
 	}
 
 	private void initializeForFirstUse() {
-
+		
 		if (!ApplicationHelper.isMaidenVoyage(this)) {
 			return;
 		}
@@ -217,7 +218,7 @@ public class MainActivity extends SherlockActivityBase implements
 																			// on
 																			// selection
 		textView.setText(new StringBuilder(getString(R.string.license_intro))
-				.append(Strings.THREENEWLINES).append(
+				.append(MyStrings.THREENEWLINES).append(
 						getString(R.string.license)));
 
 		final TextView contributorsTextView = (TextView) view
@@ -234,7 +235,7 @@ public class MainActivity extends SherlockActivityBase implements
 				} else {
 					textView.setText(new StringBuilder(
 							getString(R.string.license_intro)).append(
-							Strings.THREENEWLINES).append(
+							MyStrings.THREENEWLINES).append(
 							getString(R.string.license)));
 					contributorsTextView.setText(R.string.contributors);
 				}
@@ -283,14 +284,14 @@ public class MainActivity extends SherlockActivityBase implements
 		case MenuData.MENUITEM_REFRESH:
 			new Thread() {
 				public void run() {
-					sendBroadcast(new Intent(Strings.ACTION_REFRESHFEEDS)
+					sendBroadcast(new Intent(MyStrings.ACTION_REFRESHFEEDS)
 							.putExtra(
-									Strings.SETTINGS_OVERRIDEWIFIONLY,
+									MyStrings.SETTINGS_OVERRIDEWIFIONLY,
 									PreferenceManager
 											.getDefaultSharedPreferences(
 													MainActivity.this)
 											.getBoolean(
-													Strings.SETTINGS_OVERRIDEWIFIONLY,
+													MyStrings.SETTINGS_OVERRIDEWIFIONLY,
 													false)));
 				}
 			}.start();
@@ -310,7 +311,7 @@ public class MainActivity extends SherlockActivityBase implements
 									getReadContentValues(),
 									new StringBuilder(
 											FeedData.EntryColumns.READDATE)
-											.append(Strings.DB_ISNULL)
+											.append(MyStrings.DB_ISNULL)
 											.toString(), null) > 0) {
 						getContentResolver().notifyChange(
 								FeedData.FeedColumns.CONTENT_URI, null);
@@ -481,7 +482,7 @@ public class MainActivity extends SherlockActivityBase implements
 							Editor editor = getPreferences(MODE_PRIVATE).edit();
 
 							editor.putBoolean(
-									Strings.PREFERENCE_LICENSEACCEPTED, true);
+									MyStrings.PREFERENCE_LICENSEACCEPTED, true);
 							editor.commit();
 
 							// setContent();
@@ -529,9 +530,9 @@ public class MainActivity extends SherlockActivityBase implements
 						new Thread() {
 							public void run() {
 								FeedData.deletePicturesOfFeed(context, uri,
-										Strings.DB_EXCUDEFAVORITE);
+										MyStrings.DB_EXCUDEFAVORITE);
 								if (context.getContentResolver().delete(uri,
-										Strings.DB_EXCUDEFAVORITE, null) > 0) {
+										MyStrings.DB_EXCUDEFAVORITE, null) > 0) {
 									context.getContentResolver().notifyChange(
 											FeedData.FeedColumns.CONTENT_URI,
 											null);
@@ -591,14 +592,14 @@ public class MainActivity extends SherlockActivityBase implements
 		case R.id.menu_refresh: {
 			new Thread() {
 				public void run() {
-					sendBroadcast(new Intent(Strings.ACTION_REFRESHFEEDS)
+					sendBroadcast(new Intent(MyStrings.ACTION_REFRESHFEEDS)
 							.putExtra(
-									Strings.SETTINGS_OVERRIDEWIFIONLY,
+									MyStrings.SETTINGS_OVERRIDEWIFIONLY,
 									PreferenceManager
 											.getDefaultSharedPreferences(
 													MainActivity.this)
 											.getBoolean(
-													Strings.SETTINGS_OVERRIDEWIFIONLY,
+													MyStrings.SETTINGS_OVERRIDEWIFIONLY,
 													false)));
 				}
 			}.start();
@@ -634,8 +635,8 @@ public class MainActivity extends SherlockActivityBase implements
 																				// for
 																				// basic
 																				// checks
-				final Intent intent = new Intent(Strings.ACTION_REFRESHFEEDS)
-						.putExtra(Strings.FEEDID, id);
+				final Intent intent = new Intent(MyStrings.ACTION_REFRESHFEEDS)
+						.putExtra(MyStrings.FEEDID, id);
 
 				final Thread thread = new Thread() {
 					public void run() {
@@ -646,8 +647,8 @@ public class MainActivity extends SherlockActivityBase implements
 				if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI
 						|| PreferenceManager.getDefaultSharedPreferences(
 								MainActivity.this).getBoolean(
-								Strings.SETTINGS_OVERRIDEWIFIONLY, false)) {
-					intent.putExtra(Strings.SETTINGS_OVERRIDEWIFIONLY, true);
+								MyStrings.SETTINGS_OVERRIDEWIFIONLY, false)) {
+					intent.putExtra(MyStrings.SETTINGS_OVERRIDEWIFIONLY, true);
 					thread.start();
 				} else {
 					Cursor cursor = getContentResolver().query(
@@ -670,7 +671,7 @@ public class MainActivity extends SherlockActivityBase implements
 									public void onClick(DialogInterface dialog,
 											int which) {
 										intent.putExtra(
-												Strings.SETTINGS_OVERRIDEWIFIONLY,
+												MyStrings.SETTINGS_OVERRIDEWIFIONLY,
 												true);
 										thread.start();
 									}
@@ -685,10 +686,10 @@ public class MainActivity extends SherlockActivityBase implements
 														MainActivity.this)
 												.edit()
 												.putBoolean(
-														Strings.SETTINGS_OVERRIDEWIFIONLY,
+														MyStrings.SETTINGS_OVERRIDEWIFIONLY,
 														true).commit();
 										intent.putExtra(
-												Strings.SETTINGS_OVERRIDEWIFIONLY,
+												MyStrings.SETTINGS_OVERRIDEWIFIONLY,
 												true);
 										thread.start();
 									}
@@ -731,7 +732,7 @@ public class MainActivity extends SherlockActivityBase implements
 																	.getMenuInfo()).id)),
 													null, null);
 									sendBroadcast(new Intent(
-											Strings.ACTION_UPDATEWIDGET));
+											MyStrings.ACTION_UPDATEWIDGET));
 
 									showEmptyView();
 								}
@@ -755,7 +756,7 @@ public class MainActivity extends SherlockActivityBase implements
 									getReadContentValues(),
 									new StringBuilder(
 											FeedData.EntryColumns.READDATE)
-											.append(Strings.DB_ISNULL)
+											.append(MyStrings.DB_ISNULL)
 											.toString(), null) > 0) {
 						getContentResolver().notifyChange(
 								FeedData.FeedColumns.CONTENT_URI(id), null);
@@ -798,8 +799,8 @@ public class MainActivity extends SherlockActivityBase implements
 
 					Uri uri = FeedData.EntryColumns.CONTENT_URI(id);
 
-					String selection = Strings.READDATE_GREATERZERO
-							+ Strings.DB_AND + " (" + Strings.DB_EXCUDEFAVORITE
+					String selection = MyStrings.READDATE_GREATERZERO
+							+ MyStrings.DB_AND + " (" + MyStrings.DB_EXCUDEFAVORITE
 							+ ")";
 
 					FeedData.deletePicturesOfFeed(MainActivity.this, uri,
@@ -835,9 +836,9 @@ public class MainActivity extends SherlockActivityBase implements
 		case R.id.menu_deleteread: {
 			FeedData.deletePicturesOfFeedAsync(this,
 					FeedData.EntryColumns.CONTENT_URI,
-					Strings.READDATE_GREATERZERO);
+					MyStrings.READDATE_GREATERZERO);
 			getContentResolver().delete(FeedData.EntryColumns.CONTENT_URI,
-					Strings.READDATE_GREATERZERO, null);
+					MyStrings.READDATE_GREATERZERO, null);
 			listAdapter.notifyDataSetChanged();
 
 			break;

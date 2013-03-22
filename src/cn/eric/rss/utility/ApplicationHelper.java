@@ -7,6 +7,11 @@ import android.content.SharedPreferences;
 import cn.eric.rss.MainActivity;
 import cn.eric.rss.R;
 
+/**
+ * used for global operations
+ * @author Ruobin Wang
+ *
+ */
 public class ApplicationHelper {
 
 	public static void claimMaidenVoyage(Activity activity) {
@@ -19,6 +24,11 @@ public class ApplicationHelper {
 		editor.commit();
 	}
 
+	/**
+	 * check if this is the first use
+	 * @param activity
+	 * @return
+	 */
 	public static boolean isMaidenVoyage(Activity activity) {
 		SharedPreferences sharedPref = activity
 				.getPreferences(Context.MODE_PRIVATE);

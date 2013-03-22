@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import cn.eric.rss.provider.FeedData;
 import cn.eric.rss.utility.ApplicationHelper;
+import cn.eric.rss.utility.MyStrings;
 
 public class FeedConfigActivity extends Activity {
 	private static final String WASACTIVE = "wasactive";
@@ -85,16 +86,16 @@ public class FeedConfigActivity extends Activity {
 								return;
 							}
 
-							if (!url.startsWith(Strings.HTTP)
-									&& !url.startsWith(Strings.HTTPS)) {
-								url = Strings.HTTP + url;
+							if (!url.startsWith(MyStrings.HTTP)
+									&& !url.startsWith(MyStrings.HTTPS)) {
+								url = MyStrings.HTTP + url;
 							}
 
 							Cursor cursor = getContentResolver().query(
 									FeedData.FeedColumns.CONTENT_URI,
 									null,
 									new StringBuilder(FeedData.FeedColumns.URL)
-											.append(Strings.DB_ARG).toString(),
+											.append(MyStrings.DB_ARG).toString(),
 									new String[] { url }, null);
 
 							if (cursor.moveToFirst()) {
@@ -153,7 +154,7 @@ public class FeedConfigActivity extends Activity {
 									FeedData.FeedColumns.CONTENT_URI,
 									new String[] { FeedData.FeedColumns._ID },
 									new StringBuilder(FeedData.FeedColumns.URL)
-											.append(Strings.DB_ARG).toString(),
+											.append(MyStrings.DB_ARG).toString(),
 									new String[] { url }, null);
 
 							if (cursor.moveToFirst()
@@ -168,9 +169,9 @@ public class FeedConfigActivity extends Activity {
 								cursor.close();
 								ContentValues values = new ContentValues();
 
-								if (!url.startsWith(Strings.HTTP)
-										&& !url.startsWith(Strings.HTTPS)) {
-									url = Strings.HTTP + url;
+								if (!url.startsWith(MyStrings.HTTP)
+										&& !url.startsWith(MyStrings.HTTPS)) {
+									url = MyStrings.HTTP + url;
 								}
 								values.put(FeedData.FeedColumns.URL, url);
 

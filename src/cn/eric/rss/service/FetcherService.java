@@ -59,10 +59,10 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Xml;
-import cn.eric.rss.BASE64;
+import cn.eric.rss.utility.BASE64;
 import cn.eric.rss.MainActivity;
 import cn.eric.rss.R;
-import cn.eric.rss.Strings;
+import cn.eric.rss.utility.MyStrings;
 import cn.eric.rss.handler.RSSHandler;
 import cn.eric.rss.provider.FeedData;
 
@@ -121,15 +121,15 @@ public class FetcherService extends IntentService {
 	public void onHandleIntent(Intent intent) {
 		if (preferences == null) {
 			try {
-				preferences = PreferenceManager.getDefaultSharedPreferences(createPackageContext(Strings.PACKAGE, 0));
+				preferences = PreferenceManager.getDefaultSharedPreferences(createPackageContext(MyStrings.PACKAGE, 0));
 			} catch (NameNotFoundException e) {
 				preferences = PreferenceManager.getDefaultSharedPreferences(FetcherService.this);
 			}
 		}
 		
-		if (intent.getBooleanExtra(Strings.SCHEDULED, false)) {
+		if (intent.getBooleanExtra(MyStrings.SCHEDULED, false)) {
 			SharedPreferences.Editor editor = preferences.edit();
-			editor.putLong(Strings.PREFERENCE_LASTSCHEDULEDREFRESH, SystemClock.elapsedRealtime());
+			editor.putLong(MyStrings.PREFERENCE_LASTSCHEDULEDREFRESH, SystemClock.elapsedRealtime());
 			editor.commit();
 		}
 		
@@ -138,9 +138,9 @@ public class FetcherService extends IntentService {
 		final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 		
 		if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED && intent != null) {
-			if (preferences.getBoolean(Strings.SETTINGS_PROXYENABLED, false) && (networkInfo.getType() == ConnectivityManager.TYPE_WIFI || !preferences.getBoolean(Strings.SETTINGS_PROXYWIFIONLY, false))) {
+			if (preferences.getBoolean(MyStrings.SETTINGS_PROXYENABLED, false) && (networkInfo.getType() == ConnectivityManager.TYPE_WIFI || !preferences.getBoolean(MyStrings.SETTINGS_PROXYWIFIONLY, false))) {
 				try {
-					proxy = new Proxy(ZERO.equals(preferences.getString(Strings.SETTINGS_PROXYTYPE, ZERO)) ? Proxy.Type.HTTP : Proxy.Type.SOCKS, new InetSocketAddress(preferences.getString(Strings.SETTINGS_PROXYHOST, Strings.EMPTY), Integer.parseInt(preferences.getString(Strings.SETTINGS_PROXYPORT, Strings.DEFAULTPROXYPORT))));
+					proxy = new Proxy(ZERO.equals(preferences.getString(MyStrings.SETTINGS_PROXYTYPE, ZERO)) ? Proxy.Type.HTTP : Proxy.Type.SOCKS, new InetSocketAddress(preferences.getString(MyStrings.SETTINGS_PROXYHOST, MyStrings.EMPTY), Integer.parseInt(preferences.getString(MyStrings.SETTINGS_PROXYPORT, MyStrings.DEFAULTPROXYPORT))));
 				} catch (Exception e) {
 					proxy = null;
 				}
@@ -148,11 +148,11 @@ public class FetcherService extends IntentService {
 				proxy = null;
 			}
 
-            FetchResult updates = FetcherService.refreshFeedsStatic(FetcherService.this, intent.getStringExtra(Strings.FEEDID), networkInfo, intent.getBooleanExtra(Strings.SETTINGS_OVERRIDEWIFIONLY, false) || preferences.getBoolean(Strings.SETTINGS_OVERRIDEWIFIONLY, false));
+            FetchResult updates = FetcherService.refreshFeedsStatic(FetcherService.this, intent.getStringExtra(MyStrings.FEEDID), networkInfo, intent.getBooleanExtra(MyStrings.SETTINGS_OVERRIDEWIFIONLY, false) || preferences.getBoolean(MyStrings.SETTINGS_OVERRIDEWIFIONLY, false));
 
             if (updates.count > 0) {
-				if (preferences.getBoolean(Strings.SETTINGS_NOTIFICATIONSENABLED, false)) {
-					Cursor cursor = getContentResolver().query(FeedData.EntryColumns.CONTENT_URI, new String[] {COUNT}, new StringBuilder(FeedData.EntryColumns.READDATE).append(Strings.DB_ISNULL).toString(), null, null);
+				if (preferences.getBoolean(MyStrings.SETTINGS_NOTIFICATIONSENABLED, false)) {
+					Cursor cursor = getContentResolver().query(FeedData.EntryColumns.CONTENT_URI, new String[] {COUNT}, new StringBuilder(FeedData.EntryColumns.READDATE).append(MyStrings.DB_ISNULL).toString(), null, null);
 							
 					cursor.moveToFirst();
 					int newCount = cursor.getInt(0);
@@ -166,7 +166,7 @@ public class FetcherService extends IntentService {
 							
 					PendingIntent contentIntent = PendingIntent.getActivity(FetcherService.this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-					if (preferences.getBoolean(Strings.SETTINGS_NOTIFICATIONSVIBRATE, false)) {
+					if (preferences.getBoolean(MyStrings.SETTINGS_NOTIFICATIONSVIBRATE, false)) {
 						notification.defaults = Notification.DEFAULT_VIBRATE;
 					} 
 					notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
@@ -194,7 +194,7 @@ public class FetcherService extends IntentService {
                     }
 
                     if( (ringtone == null || ringtone.length() == 0) && updates.feedIds.size() != ringCursor.getCount()) { // at least one not overridden but the others were all silence
-                        ringtone = preferences.getString(Strings.SETTINGS_NOTIFICATIONSRINGTONE, null);
+                        ringtone = preferences.getString(MyStrings.SETTINGS_NOTIFICATIONSRINGTONE, null);
                     }
                     ringCursor.close();
 							
@@ -249,11 +249,11 @@ public class FetcherService extends IntentService {
 		
 		int iconPosition = cursor.getColumnIndex(FeedData.FeedColumns.ICON);
 		
-		boolean imposeUserAgent = !preferences.getBoolean(Strings.SETTINGS_STANDARDUSERAGENT, false);
+		boolean imposeUserAgent = !preferences.getBoolean(MyStrings.SETTINGS_STANDARDUSERAGENT, false);
 
 		int skipAlertPosition = cursor.getColumnIndex(FeedData.FeedColumns.SKIP_ALERT);
 		
-		boolean followHttpHttpsRedirects = preferences.getBoolean(Strings.SETTINGS_HTTPHTTPSREDIRECTS, false);
+		boolean followHttpHttpsRedirects = preferences.getBoolean(MyStrings.SETTINGS_HTTPHTTPSREDIRECTS, false);
 		
 		int result = 0;
 		ArrayList<String> ids = new ArrayList<String>();
@@ -261,8 +261,8 @@ public class FetcherService extends IntentService {
 		
 		RSSHandler handler = new RSSHandler(context);
 		
-		handler.setEfficientFeedParsing(preferences.getBoolean(Strings.SETTINGS_EFFICIENTFEEDPARSING, true));
-		handler.setFetchImages(preferences.getBoolean(Strings.SETTINGS_FETCHPICTURES, false));
+		handler.setEfficientFeedParsing(preferences.getBoolean(MyStrings.SETTINGS_EFFICIENTFEEDPARSING, true));
+		handler.setFetchImages(preferences.getBoolean(MyStrings.SETTINGS_FETCHPICTURES, false));
 		
 		while(cursor.moveToNext()) {
 			String id = cursor.getString(idPosition);
@@ -300,11 +300,11 @@ public class FetcherService extends IntentService {
 									posStart = line.indexOf(HREF, pos);
 
 									if (posStart > -1) {
-										String url = line.substring(posStart+6, line.indexOf('"', posStart+10)).replace(Strings.AMP_SG, Strings.AMP);
+										String url = line.substring(posStart+6, line.indexOf('"', posStart+10)).replace(MyStrings.AMP_SG, MyStrings.AMP);
 										
 										ContentValues values = new ContentValues();
 										
-										if (url.startsWith(Strings.SLASH)) {
+										if (url.startsWith(MyStrings.SLASH)) {
 											int index = feedUrl.indexOf('/', 8);
 											
 											if (index > -1) {
@@ -312,7 +312,7 @@ public class FetcherService extends IntentService {
 											} else {
 												url = feedUrl+url;
 											}
-										} else if (!url.startsWith(Strings.HTTP) && !url.startsWith(Strings.HTTPS)) {
+										} else if (!url.startsWith(MyStrings.HTTP) && !url.startsWith(MyStrings.HTTPS)) {
 											url = new StringBuilder(feedUrl).append('/').append(url).toString();
 										}
 										values.put(FeedData.FeedColumns.URL, url);
@@ -385,7 +385,7 @@ public class FetcherService extends IntentService {
 				byte[] iconBytes = cursor.getBlob(iconPosition);
 				
 				if (iconBytes == null) {
-					HttpURLConnection iconURLConnection = setupConnection(new URL(new StringBuilder(connection.getURL().getProtocol()).append(Strings.PROTOCOL_SEPARATOR).append(connection.getURL().getHost()).append(Strings.FILE_FAVICON).toString()), imposeUserAgent, followHttpHttpsRedirects);
+					HttpURLConnection iconURLConnection = setupConnection(new URL(new StringBuilder(connection.getURL().getProtocol()).append(MyStrings.PROTOCOL_SEPARATOR).append(connection.getURL().getHost()).append(MyStrings.FILE_FAVICON).toString()), imposeUserAgent, followHttpHttpsRedirects);
 					
 					try {
 						iconBytes = getBytes(getConnectionInputStream(iconURLConnection));
@@ -505,7 +505,7 @@ public class FetcherService extends IntentService {
 		cursor.close();
 		
 		if (updateWidget) {
-			context.sendBroadcast(new Intent(Strings.ACTION_UPDATEWIDGET));
+			context.sendBroadcast(new Intent(MyStrings.ACTION_UPDATEWIDGET));
 		}
 		return new FetchResult(result, ids);
 	}
@@ -539,7 +539,7 @@ public class FetcherService extends IntentService {
 		
 		String location = connection.getHeaderField("Location");
 		
-		if (location != null && (url.getProtocol().equals(Strings._HTTP) && location.startsWith(Strings.HTTPS) || url.getProtocol().equals(Strings._HTTPS) && location.startsWith(Strings.HTTP))) { 
+		if (location != null && (url.getProtocol().equals(MyStrings._HTTP) && location.startsWith(MyStrings.HTTPS) || url.getProtocol().equals(MyStrings._HTTPS) && location.startsWith(MyStrings.HTTP))) { 
 			// if location != null, the system-automatic redirect has failed which indicates a protocol change
 			if (followHttpHttpsRedirects) {
 				connection.disconnect();

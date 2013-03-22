@@ -44,7 +44,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Xml;
-import cn.eric.rss.Strings;
+import cn.eric.rss.utility.MyStrings;
 
 public class OPML {
 	private static final String START = "<?xml version=\"1.0\" encoding=\"utf-8\"?><opml version=\"1.1\"><head><title>Sparse RSS export</title><dateCreated>";
@@ -125,7 +125,7 @@ public class OPML {
 		
 		while(cursor.moveToNext()) {
 			builder.append(OUTLINE_TITLE);
-			builder.append(cursor.isNull(1) ? Strings.EMPTY : TextUtils.htmlEncode(cursor.getString(1)));
+			builder.append(cursor.isNull(1) ? MyStrings.EMPTY : TextUtils.htmlEncode(cursor.getString(1)));
 			builder.append(OUTLINE_XMLURL);
 			builder.append(TextUtils.htmlEncode(cursor.getString(2)));
 			if (cursor.getInt(3) == 1) {
@@ -169,19 +169,19 @@ public class OPML {
 					probablyValidElement = true;
 				}
 			} else if (TAG_OUTLINE.equals(localName)) {
-				String url = attributes.getValue(Strings.EMPTY, ATTRIBUTE_XMLURL);
+				String url = attributes.getValue(MyStrings.EMPTY, ATTRIBUTE_XMLURL);
 				
 				if (url != null) {
-					String title = attributes.getValue(Strings.EMPTY, ATTRIBUTE_TITLE);
+					String title = attributes.getValue(MyStrings.EMPTY, ATTRIBUTE_TITLE);
 					
 					ContentValues values = new ContentValues();
 					
 					values.put(FeedData.FeedColumns.URL, url);
 					values.put(FeedData.FeedColumns.NAME, title != null && title.length() > 0 ? title : null);
-					values.put(FeedData.FeedColumns.WIFIONLY, ATTRIBUTE_CATEGORY_VALUE.equals(attributes.getValue(Strings.EMPTY, ATTRIBUTE_CATEGORY)) ? 1 : 0);
+					values.put(FeedData.FeedColumns.WIFIONLY, ATTRIBUTE_CATEGORY_VALUE.equals(attributes.getValue(MyStrings.EMPTY, ATTRIBUTE_CATEGORY)) ? 1 : 0);
 					
 					if (context != null) {
-						Cursor cursor = context.getContentResolver().query(FeedData.FeedColumns.CONTENT_URI, null, new StringBuilder(FeedData.FeedColumns.URL).append(Strings.DB_ARG).toString(), new String[] {url}, null);
+						Cursor cursor = context.getContentResolver().query(FeedData.FeedColumns.CONTENT_URI, null, new StringBuilder(FeedData.FeedColumns.URL).append(MyStrings.DB_ARG).toString(), new String[] {url}, null);
 						
 						if (!cursor.moveToFirst()) {
 							context.getContentResolver().insert(FeedData.FeedColumns.CONTENT_URI, values); 

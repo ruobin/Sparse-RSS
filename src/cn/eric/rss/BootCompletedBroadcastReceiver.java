@@ -31,20 +31,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
-import cn.eric.rss.R;
 import cn.eric.rss.service.RefreshService;
+import cn.eric.rss.utility.MyStrings;
 
 public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		try {
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.createPackageContext(Strings.PACKAGE, 0));
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.createPackageContext(MyStrings.PACKAGE, 0));
 			
-			preferences.edit().putLong(Strings.PREFERENCE_LASTSCHEDULEDREFRESH, 0).commit();
-			if (preferences.getBoolean(Strings.SETTINGS_REFRESHENABLED, false)) {
+			preferences.edit().putLong(MyStrings.PREFERENCE_LASTSCHEDULEDREFRESH, 0).commit();
+			if (preferences.getBoolean(MyStrings.SETTINGS_REFRESHENABLED, false)) {
 				context.startService(new Intent(context, RefreshService.class));
 			}
-			context.sendBroadcast(new Intent(Strings.ACTION_UPDATEWIDGET));
+			context.sendBroadcast(new Intent(MyStrings.ACTION_UPDATEWIDGET));
 		} catch (NameNotFoundException e) {
 		}
 	}

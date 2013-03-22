@@ -67,7 +67,9 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 import android.widget.AdapterView.OnItemClickListener;
 import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.ui.MyAnimations;
 import cn.eric.rss.ui.MenuData;
+import cn.eric.rss.utility.MyStrings;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
@@ -75,7 +77,7 @@ import com.actionbarsherlock.view.SubMenu;
 import com.adsmogo.adview.AdsMogoLayout;
 import com.umeng.analytics.MobclickAgent;
 
-public class EntryActivity extends SherlockActivityBase {
+public class EntryDetailActivity extends SherlockActivityBase {
 
 	private static final String TEXT_HTML = "text/html";
 
@@ -232,7 +234,7 @@ public class EntryActivity extends SherlockActivityBase {
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		final boolean gestures = preferences.getBoolean(
-				Strings.SETTINGS_GESTURESENABLED, true);
+				MyStrings.SETTINGS_GESTURESENABLED, true);
 
 		final GestureDetector gestureDetector = new GestureDetector(this,
 				new OnGestureListener() {
@@ -346,7 +348,7 @@ public class EntryActivity extends SherlockActivityBase {
 						uri,
 						values,
 						new StringBuilder(FeedData.EntryColumns.READDATE)
-								.append(Strings.DB_ISNULL).toString(), null);
+								.append(MyStrings.DB_ISNULL).toString(), null);
 			}
 			if (abstractText == null) {
 				String link = entryCursor.getString(linkPosition);
@@ -449,11 +451,11 @@ public class EntryActivity extends SherlockActivityBase {
 				// loadData does not recognize the encoding without correct
 				// html-header
 				localPictures = abstractText
-						.indexOf(Strings.IMAGEID_REPLACEMENT) > -1;
+						.indexOf(MyStrings.IMAGEID_REPLACEMENT) > -1;
 
 				abstractText = abstractText.replace(
-						Strings.IMAGEID_REPLACEMENT, uri.getLastPathSegment()
-								+ Strings.IMAGEFILE_IDSEPARATOR);
+						MyStrings.IMAGEID_REPLACEMENT, uri.getLastPathSegment()
+								+ MyStrings.IMAGEFILE_IDSEPARATOR);
 
 				Pattern linkP = Pattern.compile("<a[^>]*href=[^>]*>");
 				Matcher linkM = linkP.matcher(abstractText);
@@ -483,14 +485,14 @@ public class EntryActivity extends SherlockActivityBase {
 
 				if (localPictures) {
 					abstractText = abstractText.replace(
-							Strings.IMAGEID_REPLACEMENT, _id
-									+ Strings.IMAGEFILE_IDSEPARATOR);
+							MyStrings.IMAGEID_REPLACEMENT, _id
+									+ MyStrings.IMAGEFILE_IDSEPARATOR);
 				}
 
-				if (preferences.getBoolean(Strings.SETTINGS_DISABLEPICTURES,
+				if (preferences.getBoolean(MyStrings.SETTINGS_DISABLEPICTURES,
 						false)) {
 					abstractText = abstractText.replaceAll(
-							Strings.HTML_IMG_REGEX, Strings.EMPTY);
+							MyStrings.HTML_IMG_REGEX, MyStrings.EMPTY);
 					webView.getSettings().setBlockNetworkImage(true);
 				} else {
 					if (webView.getSettings().getBlockNetworkImage()) {
@@ -499,13 +501,13 @@ public class EntryActivity extends SherlockActivityBase {
 						 * takes time, so we clean up the html first and change
 						 * the value afterwards
 						 */
-						webView.loadData(Strings.EMPTY, TEXT_HTML, UTF8);
+						webView.loadData(MyStrings.EMPTY, TEXT_HTML, UTF8);
 						webView.getSettings().setBlockNetworkImage(false);
 					}
 				}
 
 				int fontsize = Integer.parseInt(preferences.getString(
-						Strings.SETTINGS_FONTSIZE, Strings.ONE));
+						MyStrings.SETTINGS_FONTSIZE, MyStrings.ONE));
 
 				if (fontsize > 0) {
 					webView.loadDataWithBaseURL(null,
@@ -547,19 +549,19 @@ public class EntryActivity extends SherlockActivityBase {
 					playButton.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							final int position1 = enclosure
-									.indexOf(Strings.ENCLOSURE_SEPARATOR);
+									.indexOf(MyStrings.ENCLOSURE_SEPARATOR);
 
 							final int position2 = enclosure.indexOf(
-									Strings.ENCLOSURE_SEPARATOR, position1 + 3);
+									MyStrings.ENCLOSURE_SEPARATOR, position1 + 3);
 
 							final Uri uri = Uri.parse(enclosure.substring(0,
 									position1));
 
 							if (preferences.getBoolean(
-									Strings.SETTINGS_ENCLOSUREWARNINGSENABLED,
+									MyStrings.SETTINGS_ENCLOSUREWARNINGSENABLED,
 									true)) {
 								Builder builder = new AlertDialog.Builder(
-										EntryActivity.this);
+										EntryDetailActivity.this);
 
 								builder.setTitle(R.string.question_areyousure);
 								builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -567,7 +569,7 @@ public class EntryActivity extends SherlockActivityBase {
 									builder.setMessage(getString(
 											R.string.question_playenclosure,
 											uri,
-											position2 + 4 > enclosure.length() ? Strings.QUESTIONMARKS
+											position2 + 4 > enclosure.length() ? MyStrings.QUESTIONMARKS
 													: enclosure
 															.substring(position2 + 3)));
 								} else {
@@ -605,7 +607,7 @@ public class EntryActivity extends SherlockActivityBase {
 												preferences
 														.edit()
 														.putBoolean(
-																Strings.SETTINGS_ENCLOSUREWARNINGSENABLED,
+																MyStrings.SETTINGS_ENCLOSUREWARNINGSENABLED,
 																false).commit();
 												showEnclosure(uri, enclosure,
 														position1, position2);
@@ -657,7 +659,7 @@ public class EntryActivity extends SherlockActivityBase {
 																				// handle
 																				// this
 			} catch (Throwable t) {
-				Toast.makeText(EntryActivity.this, t.getMessage(),
+				Toast.makeText(EntryDetailActivity.this, t.getMessage(),
 						Toast.LENGTH_LONG).show();
 			}
 		}
@@ -671,7 +673,7 @@ public class EntryActivity extends SherlockActivityBase {
 				.append(date);
 
 		if (!showRead) {
-			queryString.append(Strings.DB_AND).append(
+			queryString.append(MyStrings.DB_AND).append(
 					EntriesListAdapter.READDATEISNULL);
 		}
 
@@ -732,13 +734,13 @@ public class EntryActivity extends SherlockActivityBase {
 	}
 
 	private void nextEntry(boolean animate) {
-		switchEntry(_nextId, animate, Animations.SLIDE_IN_RIGHT,
-				Animations.SLIDE_OUT_LEFT);
+		switchEntry(_nextId, animate, MyAnimations.SLIDE_IN_RIGHT,
+				MyAnimations.SLIDE_OUT_LEFT);
 	}
 
 	private void previousEntry(boolean animate) {
-		switchEntry(_previousId, animate, Animations.SLIDE_IN_LEFT,
-				Animations.SLIDE_OUT_RIGHT);
+		switchEntry(_previousId, animate, MyAnimations.SLIDE_IN_LEFT,
+				MyAnimations.SLIDE_OUT_RIGHT);
 	}
 
 	@Override

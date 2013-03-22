@@ -41,7 +41,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
-import cn.eric.rss.Strings;
+import cn.eric.rss.utility.MyStrings;
 
 public class FeedDataContentProvider extends ContentProvider {
 	private static final String FOLDER = Environment.getExternalStorageDirectory()+"/MiniRSS/";
@@ -101,7 +101,7 @@ public class FeedDataContentProvider extends ContentProvider {
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 		public DatabaseHelper(Context context, String name, int version) {
 			super(context, name, null, version);
-			context.sendBroadcast(new Intent(Strings.ACTION_UPDATEWIDGET));
+			context.sendBroadcast(new Intent(MyStrings.ACTION_UPDATEWIDGET));
 		}
 
 		@Override
@@ -342,7 +342,7 @@ public class FeedDataContentProvider extends ContentProvider {
 		
 		if (!TextUtils.isEmpty(selection)) {
 			if (where.length() > 0) {
-				where.append(Strings.DB_AND);
+				where.append(MyStrings.DB_AND);
 			}
 			where.append(selection);
 		}
@@ -555,7 +555,7 @@ public class FeedDataContentProvider extends ContentProvider {
 		
 		if (!TextUtils.isEmpty(selection)) {
 			if (where.length() > 0) {
-				where.append(Strings.DB_AND).append(selection);
+				where.append(MyStrings.DB_AND).append(selection);
 			} else {
 				where.append(selection);
 			}

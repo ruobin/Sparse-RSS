@@ -4,6 +4,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import cn.eric.rss.R;
 import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.utility.MyStrings;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -24,16 +25,16 @@ public class FeedPrefsActivity extends PreferenceActivity {
 			public boolean onPreferenceChange(Preference pref, Object change) {
 				ContentValues values = new ContentValues();
 				
-				if( pref.getKey().equals(Strings.FEED_SETTINGS_ALERT_RINGTONE)) {
+				if( pref.getKey().equals(MyStrings.FEED_SETTINGS_ALERT_RINGTONE)) {
 					values.put(FeedData.FeedColumns.ALERT_RINGTONE, change.toString());
 					getContentResolver().update(FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null);
 					return true;
-				} else if(pref.getKey().equals(Strings.FEED_SETTINGS_OTHER_ALERT_RINGTONE)) {
+				} else if(pref.getKey().equals(MyStrings.FEED_SETTINGS_OTHER_ALERT_RINGTONE)) {
 					int val = change.equals(Boolean.TRUE) ? 1 : 0;
 					values.put(FeedData.FeedColumns.OTHER_ALERT_RINGTONE, val);
 					getContentResolver().update(FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null);
 					return true;
-				} else if(pref.getKey().equals(Strings.FEED_SETTINGS_SKIP_ALERT)) {
+				} else if(pref.getKey().equals(MyStrings.FEED_SETTINGS_SKIP_ALERT)) {
 					int val = change.equals(Boolean.TRUE) ? 1 : 0;
 					values.put(FeedData.FeedColumns.SKIP_ALERT, val);
 					getContentResolver().update(FeedData.FeedColumns.CONTENT_URI(feedId), values, null, null);
@@ -43,9 +44,9 @@ public class FeedPrefsActivity extends PreferenceActivity {
 			}
 		};
 		
-		CheckBoxPreference skipAlert = (CheckBoxPreference)findPreference(Strings.FEED_SETTINGS_SKIP_ALERT);
-		CheckBoxPreference other_ringtone = (CheckBoxPreference)findPreference(Strings.FEED_SETTINGS_OTHER_ALERT_RINGTONE);
-		Preference ringtone = findPreference(Strings.FEED_SETTINGS_ALERT_RINGTONE);
+		CheckBoxPreference skipAlert = (CheckBoxPreference)findPreference(MyStrings.FEED_SETTINGS_SKIP_ALERT);
+		CheckBoxPreference other_ringtone = (CheckBoxPreference)findPreference(MyStrings.FEED_SETTINGS_OTHER_ALERT_RINGTONE);
+		Preference ringtone = findPreference(MyStrings.FEED_SETTINGS_ALERT_RINGTONE);
 		
 		skipAlert.setOnPreferenceChangeListener(listener);
 		ringtone.setOnPreferenceChangeListener(listener);

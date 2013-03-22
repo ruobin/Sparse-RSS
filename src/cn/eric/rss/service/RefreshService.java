@@ -35,14 +35,14 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import cn.eric.rss.Strings;
+import cn.eric.rss.utility.MyStrings;
 
 public class RefreshService extends Service {   
 	private static final String SIXTYMINUTES = "3600000";
 	
     private OnSharedPreferenceChangeListener listener = new OnSharedPreferenceChangeListener() {
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-			if (Strings.SETTINGS_REFRESHINTERVAL.equals(key)) {
+			if (MyStrings.SETTINGS_REFRESHINTERVAL.equals(key)) {
 				restartTimer(false);
 			}
 		}
@@ -78,12 +78,12 @@ public class RefreshService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		try {
-			preferences = PreferenceManager.getDefaultSharedPreferences(createPackageContext(Strings.PACKAGE, 0));
+			preferences = PreferenceManager.getDefaultSharedPreferences(createPackageContext(MyStrings.PACKAGE, 0));
 		} catch (NameNotFoundException e) {
 			preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		}
 		
-		refreshBroadcastIntent = new Intent(Strings.ACTION_REFRESHFEEDS).putExtra(Strings.SCHEDULED, true);
+		refreshBroadcastIntent = new Intent(MyStrings.ACTION_REFRESHFEEDS).putExtra(MyStrings.SCHEDULED, true);
 		alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		preferences.registerOnSharedPreferenceChangeListener(listener);
 		restartTimer(true);
@@ -99,7 +99,7 @@ public class RefreshService extends Service {
 		int time = 3600000;
 		
 		try {
-			time = Math.max(60000, Integer.parseInt(preferences.getString(Strings.SETTINGS_REFRESHINTERVAL, SIXTYMINUTES)));
+			time = Math.max(60000, Integer.parseInt(preferences.getString(MyStrings.SETTINGS_REFRESHINTERVAL, SIXTYMINUTES)));
 		} catch (Exception exception) {
 
 		}
@@ -107,7 +107,7 @@ public class RefreshService extends Service {
 		long initialRefreshTime = SystemClock.elapsedRealtime() + 10000;
 		
 		if (created) {
-			long lastRefresh = preferences.getLong(Strings.PREFERENCE_LASTSCHEDULEDREFRESH, 0);
+			long lastRefresh = preferences.getLong(MyStrings.PREFERENCE_LASTSCHEDULEDREFRESH, 0);
 			
 			if (lastRefresh > 0) {
 				// this indicates a service restart by the system

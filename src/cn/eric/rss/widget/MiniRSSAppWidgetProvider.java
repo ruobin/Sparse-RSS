@@ -39,7 +39,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 import cn.eric.rss.MainActivity;
 import cn.eric.rss.R;
-import cn.eric.rss.Strings;
+import cn.eric.rss.utility.MyStrings;
 import cn.eric.rss.provider.FeedData;
 
 public class MiniRSSAppWidgetProvider extends AppWidgetProvider {
@@ -62,7 +62,7 @@ public class MiniRSSAppWidgetProvider extends AppWidgetProvider {
 		SharedPreferences preferences = context.getSharedPreferences(MiniRSSAppWidgetProvider.class.getName(), 0);
 		
 		for (int n = 0, i = appWidgetIds.length; n < i; n++) {
-			updateAppWidget(context, appWidgetManager, appWidgetIds[n], preferences.getBoolean(appWidgetIds[n]+".hideread", false), preferences.getString(appWidgetIds[n]+".entrycount", "10"), preferences.getString(appWidgetIds[n]+".feeds", Strings.EMPTY), preferences.getInt(appWidgetIds[n]+".background", STANDARD_BACKGROUND));
+			updateAppWidget(context, appWidgetManager, appWidgetIds[n], preferences.getBoolean(appWidgetIds[n]+".hideread", false), preferences.getString(appWidgetIds[n]+".entrycount", "10"), preferences.getString(appWidgetIds[n]+".feeds", MyStrings.EMPTY), preferences.getInt(appWidgetIds[n]+".background", STANDARD_BACKGROUND));
 		}
     }
 	
@@ -74,17 +74,17 @@ public class MiniRSSAppWidgetProvider extends AppWidgetProvider {
 		StringBuilder selection = new StringBuilder();
 		
 		if (hideRead) {
-			selection.append(FeedData.EntryColumns.READDATE).append(Strings.DB_ISNULL);
+			selection.append(FeedData.EntryColumns.READDATE).append(MyStrings.DB_ISNULL);
 		}
 		
 		if (feedIds.length() > 0) {
 			if (selection.length() > 0) {
-				selection.append(Strings.DB_AND);
+				selection.append(MyStrings.DB_AND);
 			}
 			selection.append(FeedData.EntryColumns.FEED_ID).append(" IN ("+feedIds).append(')');
 		}
 
-		Cursor cursor = context.getContentResolver().query(FeedData.EntryColumns.CONTENT_URI, new String[] {FeedData.EntryColumns.TITLE, FeedData.EntryColumns._ID, FeedData.FeedColumns.ICON}, selection.toString(), null, new StringBuilder(FeedData.EntryColumns.DATE).append(Strings.DB_DESC).append(LIMIT).append(entryCount).toString());
+		Cursor cursor = context.getContentResolver().query(FeedData.EntryColumns.CONTENT_URI, new String[] {FeedData.EntryColumns.TITLE, FeedData.EntryColumns._ID, FeedData.FeedColumns.ICON}, selection.toString(), null, new StringBuilder(FeedData.EntryColumns.DATE).append(MyStrings.DB_DESC).append(LIMIT).append(entryCount).toString());
         
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.homescreenwidget);
 
@@ -127,7 +127,7 @@ public class MiniRSSAppWidgetProvider extends AppWidgetProvider {
         for (; k < IDS.length; k++) {
         	views.setViewVisibility(ICON_IDS[k], View.GONE);
         	views.setViewVisibility(IDS[k], View.GONE);
-        	views.setTextViewText(IDS[k], Strings.EMPTY);
+        	views.setTextViewText(IDS[k], MyStrings.EMPTY);
         }
         views.setInt(R.id.widgetlayout, "setBackgroundColor", backgroundColor);
         appWidgetManager.updateAppWidget(appWidgetId, views);
