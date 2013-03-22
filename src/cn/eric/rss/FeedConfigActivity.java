@@ -253,6 +253,9 @@ public class FeedConfigActivity extends Activity {
 		url = "http://news.163.com/special/00011K6L/rss_hotnews.xml";
 		name = "网易新闻（深度）";
 		insertFeed(activity, url, name);
+		url = "https://news.google.com.hk/news/feeds?pz=1&cf=all&ned=cn&hl=en&output=rss";
+		name = "网易新闻（深度）";
+		insertFeed(activity, url, name);
 		url = "http://news.qq.com/newssh/rss_newssh.xml";
 		name = "腾讯社会新闻";
 		insertFeed(activity, url, name);
