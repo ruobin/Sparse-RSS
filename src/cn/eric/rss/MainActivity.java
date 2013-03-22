@@ -105,8 +105,6 @@ public class MainActivity extends SherlockActivityBase implements
 
 		super.onCreate(savedInstanceState);
 
-		this.setTheme(R.style.Theme_Eric);
-
 		MobclickAgent.updateOnlineConfig(this);
 		UmengUpdateAgent.update(this);
 		UmengUpdateAgent.setUpdateOnlyWifi(false);
@@ -232,7 +230,6 @@ public class MainActivity extends SherlockActivityBase implements
 
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		// (()this.getCurrentActivity()).onCreateOptionsMenu(menu);
 		SubMenu subMenu = menu.addSubMenu("").setIcon(R.drawable.ic_more);
 		subMenu.add(0, MenuData.MENUITEM_ADD_FEED, 0, R.string.menu_addfeed);
 		subMenu.add(0, MenuData.MENUITEM_REFRESH, 0, R.string.menu_refresh);
@@ -503,7 +500,7 @@ public class MainActivity extends SherlockActivityBase implements
 		return builder.create();
 	}
 
-	private static void showDeleteAllEntriesQuestion(final Context context,
+	static void showDeleteAllEntriesQuestion(final Context context,
 			final Uri uri) {
 		Builder builder = new AlertDialog.Builder(context);
 
@@ -832,10 +829,6 @@ public class MainActivity extends SherlockActivityBase implements
 		case R.id.menu_deleteallentries: {
 			showDeleteAllEntriesQuestion(this,
 					FeedData.EntryColumns.CONTENT_URI);
-			break;
-		}
-		case R.id.menu_disablefeedsort: {
-			// do nothing as the feed sort gets disabled anyway
 			break;
 		}
 		}

@@ -29,11 +29,6 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.adsmogo.adview.AdsMogoLayout;
-import com.umeng.analytics.MobclickAgent;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.NotificationManager;
@@ -44,45 +39,43 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-import cn.eric.rss.R;
+import android.widget.AdapterView.OnItemClickListener;
 import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.ui.MenuData;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
+import com.adsmogo.adview.AdsMogoLayout;
+import com.umeng.analytics.MobclickAgent;
 
 public class EntryActivity extends SherlockActivityBase {
-	/*
-	 * private static final String NEWLINE = "\n";
-	 * 
-	 * private static final String BR = "<br/>";
-	 */
 
 	private static final String TEXT_HTML = "text/html";
 
@@ -126,61 +119,29 @@ public class EntryActivity extends SherlockActivityBase {
 
 	private static final String BRACKET = " (";
 
-	private int titlePosition;
+	private int titlePosition, datePosition, abstractPosition, linkPosition,
+			feedIdPosition, favoritePosition, readDatePosition,
+			enclosurePosition, authorPosition;
 
-	private int datePosition;
+	private String _id, _nextId, _previousId;
 
-	private int abstractPosition;
-
-	private int linkPosition;
-
-	private int feedIdPosition;
-
-	private int favoritePosition;
-
-	private int readDatePosition;
-
-	private int enclosurePosition;
-
-	private int authorPosition;
-
-	private String _id;
-
-	private String _nextId;
-
-	private String _previousId;
-
-	private Uri uri;
-
-	private Uri parentUri;
+	private Uri uri, parentUri;
 
 	private int feedId;
 
 	boolean favorite;
 
-	private boolean showRead;
-
-	private boolean canShowIcon;
+	private boolean showRead, canShowIcon;
 
 	private byte[] iconBytes;
 
-	private WebView webView;
-
-	private WebView webView0; // only needed for the animation
+	private WebView webView, webView0; // only needed for the animation
 
 	private ViewFlipper viewFlipper;
 
-	private ImageButton nextButton;
+	private ImageButton nextButton, urlButton, previousButton, playButton;
 
-	private ImageButton urlButton;
-
-	private ImageButton previousButton;
-
-	private ImageButton playButton;
-
-	int scrollX;
-
-	int scrollY;
+	int scrollX, scrollY;
 
 	private String link;
 
@@ -196,41 +157,9 @@ public class EntryActivity extends SherlockActivityBase {
 
 	private int backgroundColor;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
-		int titleId = -1;
-
-		if (MainActivity.POSTGINGERBREAD) {
-			canShowIcon = true;
-
-			try {
-				/*
-				 * This is a trick as com.android.internal.R.id.action_bar_title
-				 * is not directly accessible
-				 */
-				titleId = (Integer) Class.forName("com.android.internal.R$id")
-						.getField("action_bar_title").get(null);
-			} catch (Exception exception) {
-
-			}
-		} else {
-			titleId = android.R.id.title;
-		}
-
-		try {
-			titleTextView = (TextView) findViewById(titleId);
-			titleTextView.setSingleLine(true);
-			titleTextView.setHorizontallyScrolling(true);
-			titleTextView.setMarqueeRepeatLimit(1);
-			titleTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-			titleTextView.setFocusable(true);
-			titleTextView.setFocusableInTouchMode(true);
-		} catch (Exception e) {
-			// just in case for non standard android, nullpointer etc
-		}
 
 		uri = getIntent().getData();
 		parentUri = FeedData.EntryColumns.PARENT_URI(uri.getPath());
@@ -369,13 +298,6 @@ public class EntryActivity extends SherlockActivityBase {
 	}
 
 	@Override
-	protected void onInitUpbar(ActionBar actionBar) {
-		super.onInitUpbar(actionBar);
-		actionBar.setDisplayShowTitleEnabled(true);
-
-	}
-	
-	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		webView.restoreState(savedInstanceState);
@@ -433,7 +355,6 @@ public class EntryActivity extends SherlockActivityBase {
 				finish();
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
 			} else {
-//				setTitle(entryCursor.getString(titlePosition));
 				updateUpbarTitle(entryCursor.getString(titlePosition));
 				if (titleTextView != null) {
 					titleTextView.requestFocus(); // restart ellipsize
@@ -463,29 +384,29 @@ public class EntryActivity extends SherlockActivityBase {
 						iconCursor.close();
 					}
 
-					if (iconBytes != null && iconBytes.length > 0) {
-						int bitmapSizeInDip = (int) TypedValue.applyDimension(
-								TypedValue.COMPLEX_UNIT_DIP, 24f,
-								getResources().getDisplayMetrics());
-						Bitmap bitmap = BitmapFactory.decodeByteArray(
-								iconBytes, 0, iconBytes.length);
-						if (bitmap != null) {
-							if (bitmap.getHeight() != bitmapSizeInDip) {
-								bitmap = Bitmap
-										.createScaledBitmap(bitmap,
-												bitmapSizeInDip,
-												bitmapSizeInDip, false);
-							}
-
-							if (MainActivity.POSTGINGERBREAD) {
-								CompatibilityHelper.setActionBarDrawable(this,
-										new BitmapDrawable(bitmap));
-							} else {
-								setFeatureDrawable(Window.FEATURE_LEFT_ICON,
-										new BitmapDrawable(bitmap));
-							}
-						}
-					}
+					// if (iconBytes != null && iconBytes.length > 0) {
+					// int bitmapSizeInDip = (int) TypedValue.applyDimension(
+					// TypedValue.COMPLEX_UNIT_DIP, 24f,
+					// getResources().getDisplayMetrics());
+					// Bitmap bitmap = BitmapFactory.decodeByteArray(
+					// iconBytes, 0, iconBytes.length);
+					// if (bitmap != null) {
+					// if (bitmap.getHeight() != bitmapSizeInDip) {
+					// bitmap = Bitmap
+					// .createScaledBitmap(bitmap,
+					// bitmapSizeInDip,
+					// bitmapSizeInDip, false);
+					// }
+					//
+					// if (MainActivity.POSTGINGERBREAD) {
+					// CompatibilityHelper.setActionBarDrawable(this,
+					// new BitmapDrawable(bitmap));
+					// } else {
+					// setFeatureDrawable(Window.FEATURE_LEFT_ICON,
+					// new BitmapDrawable(bitmap));
+					// }
+					// }
+					// }
 				}
 
 				long timestamp = entryCursor.getLong(datePosition);
@@ -586,15 +507,6 @@ public class EntryActivity extends SherlockActivityBase {
 				int fontsize = Integer.parseInt(preferences.getString(
 						Strings.SETTINGS_FONTSIZE, Strings.ONE));
 
-				/*
-				 * if (abstractText.indexOf('<') > -1 &&
-				 * abstractText.indexOf('>') > -1) { abstractText =
-				 * abstractText.replace(NEWLINE, BR); }
-				 */
-
-				// if (MainTabActivity.isLightTheme(this) ||
-				// preferences.getBoolean(Strings.SETTINGS_BLACKTEXTONWHITE,
-				// false)) {
 				if (fontsize > 0) {
 					webView.loadDataWithBaseURL(null,
 							new StringBuilder(CSS).append(FONTSIZE_START)
@@ -610,21 +522,6 @@ public class EntryActivity extends SherlockActivityBase {
 				}
 				webView.setBackgroundColor(backgroundColor);
 				content.setBackgroundColor(Color.WHITE);
-				// }
-				// else {
-				// if (fontsize > 0) {
-				// webView.loadDataWithBaseURL(null, new
-				// StringBuilder(FONT_FONTSIZE_START).append(fontsize).append(FONTSIZE_MIDDLE).append(abstractText).append(FONT_END).toString(),
-				// TEXT_HTML, UTF8, null);
-				// } else {
-				// webView.loadDataWithBaseURL(null, new
-				// StringBuilder(FONT_START).append(abstractText).append(BODY_END).toString(),
-				// TEXT_HTML, UTF8, null);
-				// }
-				// webView.setBackgroundColor(Color.BLACK);
-				// content.setBackgroundColor(Color.BLACK);
-				// }
-
 				link = entryCursor.getString(linkPosition);
 
 				if (link != null && link.length() > 0) {
@@ -742,10 +639,6 @@ public class EntryActivity extends SherlockActivityBase {
 			entryCursor.close();
 		}
 
-		/*
-		 * new Thread() { public void run() { sendBroadcast(new
-		 * Intent(Strings.ACTION_UPDATEWIDGET)); // this is slow } }.start();
-		 */
 	}
 
 	private void showEnclosure(Uri uri, String enclosure, int position1,
@@ -865,51 +758,6 @@ public class EntryActivity extends SherlockActivityBase {
 		super.onSaveInstanceState(outState);
 	}
 
-	// @Override
-	// public boolean onCreateOptionsMenu(Menu menu) {
-	// getMenuInflater().inflate(R.menu.entry, menu);
-	// return true;
-	// }
-
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_copytoclipboard: {
-			if (link != null) {
-				((ClipboardManager) getSystemService(CLIPBOARD_SERVICE))
-						.setText(link);
-			}
-			break;
-		}
-		case R.id.menu_delete: {
-			getContentResolver().delete(uri, null, null);
-			if (localPictures) {
-				FeedData.deletePicturesOfEntry(_id);
-			}
-
-			if (nextButton.isEnabled()) {
-				nextButton.performClick();
-			} else {
-				if (previousButton.isEnabled()) {
-					previousButton.performClick();
-				} else {
-					finish();
-				}
-			}
-			break;
-		}
-		case R.id.menu_share: {
-			if (link != null) {
-				startActivity(Intent.createChooser(new Intent(
-						Intent.ACTION_SEND).putExtra(Intent.EXTRA_TEXT, link)
-						.setType(TEXTPLAIN), getString(R.string.menu_share)));
-			}
-			break;
-		}
-		}
-		return true;
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -961,11 +809,77 @@ public class EntryActivity extends SherlockActivityBase {
 	protected int getLayoutRes() {
 		return R.layout.entry;
 	}
-	
+
+	@Override
+	protected void onInitUpbar(ActionBar actionBar) {
+		super.onInitUpbar(actionBar);
+		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setTitle("");
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+
+		SubMenu subMenu = menu.addSubMenu("").setIcon(R.drawable.ic_more);
+
+		subMenu.add(0, MenuData.MENUITEM_COPY_LINK_INTO_CLIPBOARD, 0,
+				R.string.contextmenu_copyurl);
+		subMenu.add(0, MenuData.MENUITEM_SHARE, 0, R.string.menu_share);
+
+		subMenu.add(0, MenuData.MENUITEM_DELETE, 0, R.string.contextmenu_delete);
+
+		subMenu.getItem().setShowAsAction(
+				MenuItem.SHOW_AS_ACTION_ALWAYS
+						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+
+		return true;
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(
 			com.actionbarsherlock.view.MenuItem menuItem) {
+		switch (menuItem.getItemId()) {
+		case MenuData.MENUITEM_COPY_LINK_INTO_CLIPBOARD: {
+			if (link != null) {
+				((ClipboardManager) getSystemService(CLIPBOARD_SERVICE))
+						.setText(link);
+			}
+			break;
+		}
+
+		case MenuData.MENUITEM_SHARE: {
+			if (link != null) {
+				startActivity(Intent.createChooser(new Intent(
+						Intent.ACTION_SEND).putExtra(Intent.EXTRA_TEXT, link)
+						.setType(TEXTPLAIN), getString(R.string.menu_share)));
+			}
+			break;
+		}
+
+		case MenuData.MENUITEM_DELETE: {
+			getContentResolver().delete(uri, null, null);
+			if (localPictures) {
+				FeedData.deletePicturesOfEntry(_id);
+			}
+
+			if (nextButton.isEnabled()) {
+				nextButton.performClick();
+			} else {
+				if (previousButton.isEnabled()) {
+					previousButton.performClick();
+				} else {
+					finish();
+				}
+			}
+			break;
+		}
+		}
 		return super.onOptionsItemSelected(menuItem);
 	}
 

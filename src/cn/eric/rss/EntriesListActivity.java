@@ -26,6 +26,7 @@
 package cn.eric.rss;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.SubMenu;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -53,6 +54,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.ui.MenuData;
 
 public class EntriesListActivity extends SherlockActivityBase implements
 		OnItemClickListener {
@@ -78,7 +80,7 @@ public class EntriesListActivity extends SherlockActivityBase implements
 
 	private EntriesListAdapter entriesListAdapter;
 
-	private byte[] iconBytes;
+	// private byte[] iconBytes;
 
 	private ListView listView;
 
@@ -87,19 +89,19 @@ public class EntriesListActivity extends SherlockActivityBase implements
 
 		super.onCreate(savedInstanceState);
 
-		iconBytes = null;
+		// iconBytes = null;
 
 		Intent intent = getIntent();
 
-		if (!MainActivity.POSTGINGERBREAD && iconBytes != null
-				&& iconBytes.length > 0) { // we cannot insert the icon here
-											// because it would be overwritten,
-											// but we have to reserve the icon
-											// here
-			if (!requestWindowFeature(Window.FEATURE_LEFT_ICON)) {
-				iconBytes = null;
-			}
-		}
+		// if (!MainActivity.POSTGINGERBREAD && iconBytes != null
+		// && iconBytes.length > 0) { // we cannot insert the icon here
+		// // because it would be overwritten,
+		// // but we have to reserve the icon
+		// // here
+		// if (!requestWindowFeature(Window.FEATURE_LEFT_ICON)) {
+		// iconBytes = null;
+		// }
+		// }
 
 		listView = (ListView) this.findViewById(android.R.id.list);
 		listView.setOnItemClickListener(this);
@@ -111,27 +113,27 @@ public class EntriesListActivity extends SherlockActivityBase implements
 				intent.getBooleanExtra(EXTRA_AUTORELOAD, false));
 		listView.setAdapter(entriesListAdapter);
 
-		if (iconBytes != null && iconBytes.length > 0) {
-			int bitmapSizeInDip = (int) TypedValue.applyDimension(
-					TypedValue.COMPLEX_UNIT_DIP, 24f, getResources()
-							.getDisplayMetrics());
-			Bitmap bitmap = BitmapFactory.decodeByteArray(iconBytes, 0,
-					iconBytes.length);
-			if (bitmap != null) {
-				if (bitmap.getHeight() != bitmapSizeInDip) {
-					bitmap = Bitmap.createScaledBitmap(bitmap, bitmapSizeInDip,
-							bitmapSizeInDip, false);
-				}
-
-				if (MainActivity.POSTGINGERBREAD) {
-					CompatibilityHelper.setActionBarDrawable(this,
-							new BitmapDrawable(bitmap));
-				} else {
-					setFeatureDrawable(Window.FEATURE_LEFT_ICON,
-							new BitmapDrawable(bitmap));
-				}
-			}
-		}
+		// if (iconBytes != null && iconBytes.length > 0) {
+		// int bitmapSizeInDip = (int) TypedValue.applyDimension(
+		// TypedValue.COMPLEX_UNIT_DIP, 24f, getResources()
+		// .getDisplayMetrics());
+		// Bitmap bitmap = BitmapFactory.decodeByteArray(iconBytes, 0,
+		// iconBytes.length);
+		// if (bitmap != null) {
+		// if (bitmap.getHeight() != bitmapSizeInDip) {
+		// bitmap = Bitmap.createScaledBitmap(bitmap, bitmapSizeInDip,
+		// bitmapSizeInDip, false);
+		// }
+		//
+		// if (MainActivity.POSTGINGERBREAD) {
+		// CompatibilityHelper.setActionBarDrawable(this,
+		// new BitmapDrawable(bitmap));
+		// } else {
+		// setFeatureDrawable(Window.FEATURE_LEFT_ICON,
+		// new BitmapDrawable(bitmap));
+		// }
+		// }
+		// }
 		if (MainActivity.notificationManager != null) {
 			MainActivity.notificationManager.cancel(0);
 		}
@@ -177,10 +179,10 @@ public class EntriesListActivity extends SherlockActivityBase implements
 			if (cursor.moveToFirst()) {
 				title = cursor.isNull(0) ? cursor.getString(1) : cursor
 						.getString(0);
-				iconBytes = cursor.getBlob(2);
+				// iconBytes = cursor.getBlob(2);
 			}
 			cursor.close();
-			if (title != null && !title.isEmpty()) {
+			if (title != null && title.length()>0) {
 				return title;
 			}
 		}
@@ -198,45 +200,14 @@ public class EntriesListActivity extends SherlockActivityBase implements
 		entriesListAdapter.neutralizeReadState();
 		startActivity(new Intent(Intent.ACTION_VIEW,
 				ContentUris.withAppendedId(uri, id)).putExtra(EXTRA_SHOWREAD,
-				entriesListAdapter.isShowRead()).putExtra(
-				FeedData.FeedColumns.ICON, iconBytes));
+				entriesListAdapter.isShowRead()));
 	}
 
-	// @Override
-	// public boolean onCreateOptionsMenu(Menu menu) {
-	// getMenuInflater().inflate(R.menu.entrylist, menu);
-	// return true;
-	// }
-	//
-	// @Override
-	// public boolean onPrepareOptionsMenu(Menu menu) {
-	// menu.setGroupVisible(R.id.menu_group_0, entriesListAdapter.getCount() >
-	// 0);
-	// return true;
-	// }
+	@Override
+	public boolean onContextItemSelected(final android.view.MenuItem item) {
 
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_markasread: {
-			new Thread() { // the update process takes some time
-				public void run() {
-					getContentResolver().update(uri,
-							MainActivity.getReadContentValues(), null, null);
-				}
-			}.start();
-			entriesListAdapter.markAsRead();
-			break;
-		}
-		case R.id.menu_markasunread: {
-			new Thread() { // the update process takes some time
-				public void run() {
-					getContentResolver().update(uri,
-							MainActivity.getUnreadContentValues(), null, null);
-				}
-			}.start();
-			entriesListAdapter.markAsUnread();
-			break;
-		}
+	
 		case R.id.menu_hideread: {
 			if (item.isChecked()) {
 				item.setChecked(false).setTitle(R.string.contextmenu_hideread)
@@ -249,52 +220,7 @@ public class EntriesListActivity extends SherlockActivityBase implements
 			}
 			break;
 		}
-		case R.id.menu_deleteread: {
-			new Thread() { // the delete process takes some time
-				public void run() {
-					String selection = Strings.READDATE_GREATERZERO
-							+ Strings.DB_AND + " (" + Strings.DB_EXCUDEFAVORITE
-							+ ")";
-
-					getContentResolver().delete(uri, selection, null);
-					FeedData.deletePicturesOfFeed(EntriesListActivity.this,
-							uri, selection);
-					runOnUiThread(new Runnable() {
-						public void run() {
-							entriesListAdapter.getCursor().requery();
-						}
-					});
-				}
-			}.start();
-			break;
-		}
-		case R.id.menu_deleteallentries: {
-			Builder builder = new AlertDialog.Builder(this);
-
-			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setTitle(R.string.contextmenu_deleteallentries);
-			builder.setMessage(R.string.question_areyousure);
-			builder.setPositiveButton(android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							new Thread() {
-								public void run() {
-									getContentResolver().delete(uri,
-											Strings.DB_EXCUDEFAVORITE, null);
-									runOnUiThread(new Runnable() {
-										public void run() {
-											entriesListAdapter.getCursor()
-													.requery();
-										}
-									});
-								}
-							}.start();
-						}
-					});
-			builder.setNegativeButton(android.R.string.no, null);
-			builder.show();
-			break;
-		}
+		
 		case CONTEXTMENU_MARKASREAD_ID: {
 			long id = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).id;
 
@@ -337,8 +263,114 @@ public class EntriesListActivity extends SherlockActivityBase implements
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+		SubMenu subMenu = menu.addSubMenu("").setIcon(R.drawable.ic_more);
+
+		subMenu.add(0, MenuData.MENUITEM_MARK_AS_READ, 0,
+				R.string.contextmenu_markasread);
+		subMenu.add(0, MenuData.MENUITEM_MARK_AS_UNREAD, 0,
+				R.string.contextmenu_markasunread);
+
+		subMenu.add(0, MenuData.MENUITEM_DELETE_READ_ENTRIES, 0,
+				R.string.contextmenu_deleteread);
+		subMenu.add(0, MenuData.MENUITEM_DELETE_ALL_ENTRIES, 0,
+				R.string.contextmenu_deleteallentries);
+
+		subMenu.getItem().setShowAsAction(
+				MenuItem.SHOW_AS_ACTION_ALWAYS
+						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		return true;
+	}
+
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// getMenuInflater().inflate(R.menu.entrylist, menu);
+	// return true;
+	// }
+	//
+	@Override
+	public boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+		// menu.setGroupVisible(R.id.menu_group_0, entriesListAdapter.getCount()
+		// >
+		// 0);
+		return true;
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(
-			com.actionbarsherlock.view.MenuItem menuItem) {
+			final com.actionbarsherlock.view.MenuItem menuItem) {
+
+		switch (menuItem.getItemId()) {
+		case MenuData.MENUITEM_MARK_AS_READ: {
+			new Thread() { // the update process takes some time
+				public void run() {
+					getContentResolver().update(uri,
+							MainActivity.getReadContentValues(), null, null);
+				}
+			}.start();
+			entriesListAdapter.markAsRead();
+			break;
+		}
+		case MenuData.MENUITEM_MARK_AS_UNREAD: {
+			new Thread() { // the update process takes some time
+				public void run() {
+					getContentResolver().update(uri,
+							MainActivity.getUnreadContentValues(), null, null);
+				}
+			}.start();
+			entriesListAdapter.markAsUnread();
+			break;
+		}
+
+		case MenuData.MENUITEM_DELETE_READ_ENTRIES: {
+			new Thread() { // the delete process takes some time
+				public void run() {
+					String selection = Strings.READDATE_GREATERZERO
+							+ Strings.DB_AND + " (" + Strings.DB_EXCUDEFAVORITE
+							+ ")";
+
+					getContentResolver().delete(uri, selection, null);
+					FeedData.deletePicturesOfFeed(EntriesListActivity.this,
+							uri, selection);
+					runOnUiThread(new Runnable() {
+						public void run() {
+							entriesListAdapter.getCursor().requery();
+						}
+					});
+				}
+			}.start();
+
+			break;
+		}
+		case MenuData.MENUITEM_DELETE_ALL_ENTRIES: {
+			Builder builder = new AlertDialog.Builder(this);
+
+			builder.setIcon(android.R.drawable.ic_dialog_alert);
+			builder.setTitle(R.string.contextmenu_deleteallentries);
+			builder.setMessage(R.string.question_areyousure);
+			builder.setPositiveButton(android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							new Thread() {
+								public void run() {
+									getContentResolver().delete(uri,
+											Strings.DB_EXCUDEFAVORITE, null);
+									runOnUiThread(new Runnable() {
+										public void run() {
+											entriesListAdapter.getCursor()
+													.requery();
+										}
+									});
+								}
+							}.start();
+						}
+					});
+			builder.setNegativeButton(android.R.string.no, null);
+			builder.show();
+			break;
+		}
+
+		}
 		return super.onOptionsItemSelected(menuItem);
 	}
 
