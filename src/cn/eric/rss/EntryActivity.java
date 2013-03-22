@@ -72,7 +72,6 @@ import cn.eric.rss.ui.MenuData;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
-import com.adsmogo.adview.AdsMogoLayout;
 import com.umeng.analytics.MobclickAgent;
 
 public class EntryActivity extends SherlockActivityBase {
@@ -794,15 +793,6 @@ public class EntryActivity extends SherlockActivityBase {
 		} catch (Exception e) {
 			// do nothing
 		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		AdsMogoLayout.clear();
-		// 清除adsMogoLayout 实例所产生用于多线程缓冲机制的线程池
-		// 此方法请不要轻易调用，如果调用时间不当，会造成无法统计计数
-		// adsMogoLayoutCode.clearThread();
-		super.onDestroy();
 	}
 
 	@Override

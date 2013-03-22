@@ -150,27 +150,7 @@
             android:exported="true"
             android:process=":DownloadingService" >
         </service>
-
-        <!-- 声明Mogo的Activity -->
-        <activity
-            android:name="com.adsmogo.adview.AdsMogoWebView"
-            android:label="@string/app_name" >
-        </activity>
-        <!-- 注册Service，应用下载所需 -->
-        <service
-            android:name="com.adsmogo.controller.service.UpdateService"
-            android:exported="true"
-            android:process=":remote" />
-        <!-- 注册Service，应用被安装所用 -->
-        <service
-            android:name="com.adsmogo.controller.service.CountService"
-            android:exported="true"
-            android:process=":remote" />
-
-        <!-- 声明多盟的Activity -->
-        <activity
-            android:name="cn.domob.android.ads.DomobActivity"
-            android:theme="@android:style/Theme.Translucent" />
+       
     </application>
 
 </manifest>
