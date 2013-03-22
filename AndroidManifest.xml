@@ -9,6 +9,7 @@
         android:minSdkVersion="7"
         android:targetSdkVersion="11" />
 
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -22,10 +23,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Android 1.5 requires this -->
-    <uses-permission android:name="cn.eric.rss.READFEEDS" />
-    <uses-permission android:name="cn.eric.rss.WRITEFEEDS" />
 
     <permission
         android:name="cn.eric.rss.READFEEDS"
@@ -143,7 +140,7 @@
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Umeng" />
+            android:value="develop" />
 
         <service
             android:name="com.umeng.common.net.DownloadingService"

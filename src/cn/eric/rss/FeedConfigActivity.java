@@ -40,6 +40,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.utility.ApplicationHelper;
 
 public class FeedConfigActivity extends Activity {
 	private static final String WASACTIVE = "wasactive";
@@ -58,7 +59,7 @@ public class FeedConfigActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		this.setContentView(R.layout.feedsettings);
 		setResult(RESULT_CANCELED);
 
@@ -66,18 +67,18 @@ public class FeedConfigActivity extends Activity {
 
 		nameEditText = (EditText) findViewById(R.id.feed_title);
 		urlEditText = (EditText) findViewById(R.id.feed_url);
-		refreshOnlyWifiCheckBox = (CheckBox) findViewById(R.id.wifionlycheckbox);		
-		
-		//add feed dialog
+		refreshOnlyWifiCheckBox = (CheckBox) findViewById(R.id.wifionlycheckbox);
+
+		// add feed dialog
 		if (intent.getAction().equals(Intent.ACTION_INSERT)) {
-			
+
 			restoreInstanceState(savedInstanceState);
 			((Button) findViewById(R.id.button_ok))
 					.setOnClickListener(new OnClickListener() {
 						public void onClick(View v) {
 							String url = urlEditText.getText().toString();
-							
-							if(url==null || url.length()<=0){
+
+							if (url == null || url.length() <= 0) {
 								Toast.makeText(FeedConfigActivity.this,
 										R.string.error_feederror,
 										Toast.LENGTH_LONG).show();
@@ -126,7 +127,7 @@ public class FeedConfigActivity extends Activity {
 						}
 					});
 		} else {
-			//edit feed dialog
+			// edit feed dialog
 			if (!restoreInstanceState(savedInstanceState)) {
 				Cursor cursor = getContentResolver().query(intent.getData(),
 						PROJECTION, null, null, null);
@@ -237,13 +238,6 @@ public class FeedConfigActivity extends Activity {
 	 * @return
 	 */
 	public static void insertInitialFeeds(Activity activity) {
-		
-		if(!isMaidenVoyage(activity)){
-			return;
-		}
-		
-		claimMaidenVoyage(activity);
-		
 		Cursor cursor = activity.getContentResolver().query(
 				FeedData.FeedColumns.CONTENT_URI, null, null, null, null);
 
@@ -273,19 +267,6 @@ public class FeedConfigActivity extends Activity {
 		url = "http://online.wsj.com/xml/rss/3_7085.xml";
 		name = "华尔街日报（世界新闻，英文）";
 		insertFeed(activity, url, name);
-	}
-
-	private static void claimMaidenVoyage(Activity activity) {
-		SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putBoolean(activity.getResources().getString(R.string.pref_maiden_voyage), false);
-		editor.commit();		
-	}
-
-	private static boolean isMaidenVoyage(Activity activity) {
-		SharedPreferences sharedPref =activity.getPreferences(Context.MODE_PRIVATE);
-		boolean isMaidenVoyage = sharedPref.getBoolean(activity.getResources().getString(R.string.pref_maiden_voyage), true);
-		return isMaidenVoyage;
 	}
 
 	private static boolean insertFeed(Activity activity, String url, String name) {

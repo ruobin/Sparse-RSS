@@ -5,11 +5,13 @@ import java.io.FilenameFilter;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
@@ -37,6 +39,7 @@ import cn.eric.rss.provider.FeedData;
 import cn.eric.rss.provider.OPML;
 import cn.eric.rss.service.RefreshService;
 import cn.eric.rss.ui.MenuData;
+import cn.eric.rss.utility.ApplicationHelper;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -119,7 +122,7 @@ public class MainActivity extends SherlockActivityBase implements
 			notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		}
 
-		FeedConfigActivity.insertInitialFeeds(this);
+		initializeForFirstUse();
 
 		listView = (ListView) this.findViewById(R.id.list);
 		listAdapter = new RSSOverviewListAdapter(this);
@@ -146,6 +149,20 @@ public class MainActivity extends SherlockActivityBase implements
 				}
 			}.start();
 		}
+	}
+
+	private void initializeForFirstUse() {
+
+		if (!ApplicationHelper.isMaidenVoyage(this)) {
+			return;
+		}
+
+		FeedConfigActivity.insertInitialFeeds(this);
+
+		ApplicationHelper.createShortcutOnHomeScreen(this);
+
+		ApplicationHelper.claimMaidenVoyage(this);
+
 	}
 
 	/**
@@ -230,9 +247,9 @@ public class MainActivity extends SherlockActivityBase implements
 
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		
-		com.actionbarsherlock.view.Menu subMenu=getSubMenu(menu);
-		
+
+		com.actionbarsherlock.view.Menu subMenu = getSubMenu(menu);
+
 		subMenu.add(0, MenuData.MENUITEM_ADD_FEED, 0, R.string.menu_addfeed);
 		subMenu.add(0, MenuData.MENUITEM_REFRESH, 0, R.string.menu_refresh);
 		subMenu.add(0, MenuData.MENUITEM_SETTINGS, 0, R.string.menu_settings);
