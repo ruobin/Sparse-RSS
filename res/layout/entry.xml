@@ -42,23 +42,8 @@
             android:id="@+id/content_flipper"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@+id/adv"
-            android:background="@color/common_bg_gray" />
-
-        <LinearLayout
-            android:id="@+id/adv"
-            android:layout_width="fill_parent"
-            android:layout_height="50dip"
             android:layout_above="@+id/bottom"
-            android:background="@color/common_bg_gray" >
-
-            <com.adsmogo.adview.AdsMogoLayout
-                android:id="@+id/adsMogoView"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                adsmogo:appid="220f0cd1407b4414b4213012d9251373"
-                adsmogo:express_mode="true" />
-        </LinearLayout>
+            android:background="@color/common_bg_gray" />
 
         <LinearLayout
             android:id="@+id/bottom"

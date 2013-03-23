@@ -44,37 +44,29 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.webkit.WebView;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-import android.widget.AdapterView.OnItemClickListener;
 import cn.eric.rss.provider.FeedData;
-import cn.eric.rss.ui.MyAnimations;
 import cn.eric.rss.ui.MenuData;
+import cn.eric.rss.ui.MyAnimations;
 import cn.eric.rss.utility.MyStrings;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
-import com.adsmogo.adview.AdsMogoLayout;
 import com.umeng.analytics.MobclickAgent;
 
 public class EntryDetailActivity extends SherlockActivityBase {
@@ -796,15 +788,6 @@ public class EntryDetailActivity extends SherlockActivityBase {
 		} catch (Exception e) {
 			// do nothing
 		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		AdsMogoLayout.clear();
-		// 清除adsMogoLayout 实例所产生用于多线程缓冲机制的线程池
-		// 此方法请不要轻易调用，如果调用时间不当，会造成无法统计计数
-		// adsMogoLayoutCode.clearThread();
-		super.onDestroy();
 	}
 
 	@Override
