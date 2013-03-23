@@ -9,8 +9,9 @@ import cn.eric.rss.R;
 
 /**
  * used for global operations
+ * 
  * @author Ruobin Wang
- *
+ * 
  */
 public class ApplicationHelper {
 
@@ -26,6 +27,7 @@ public class ApplicationHelper {
 
 	/**
 	 * check if this is the first use
+	 * 
 	 * @param activity
 	 * @return
 	 */
@@ -46,8 +48,10 @@ public class ApplicationHelper {
 
 		Intent addIntent = new Intent();
 		addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-		addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, R.string.app_name);
-		addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+		addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, activity.getResources()
+				.getString(R.string.app_name));
+		addIntent.putExtra(
+				Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
 				Intent.ShortcutIconResource.fromContext(
 						activity.getApplicationContext(), R.drawable.ic_logo));
 
