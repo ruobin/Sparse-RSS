@@ -64,7 +64,7 @@ import cn.eric.rss.MainActivity;
 import cn.eric.rss.R;
 import cn.eric.rss.utility.MyStrings;
 import cn.eric.rss.handler.RSSHandler;
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.FeedData;
 
 public class FetcherService extends IntentService {
 	private static final int FETCHMODE_DIRECT = 1;

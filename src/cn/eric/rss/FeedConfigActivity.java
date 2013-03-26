@@ -39,7 +39,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.FeedData;
 import cn.eric.rss.utility.ApplicationHelper;
 import cn.eric.rss.utility.MyStrings;
 
@@ -250,24 +250,27 @@ public class FeedConfigActivity extends Activity {
 		url = "http://news.163.com/special/00011K6L/rss_newstop.xml";
 		name = "网易新闻（头条）";
 		insertFeed(activity, url, name);
-		url = "http://news.163.com/special/00011K6L/rss_hotnews.xml";
-		name = "网易新闻（深度）";
-		insertFeed(activity, url, name);
+		
 		url = "https://news.google.com.hk/news/feeds?pz=1&cf=all&ned=cn&hl=en&output=rss";
 		name = "谷歌新闻";
 		insertFeed(activity, url, name);
-		url = "http://news.qq.com/newssh/rss_newssh.xml";
-		name = "腾讯社会新闻";
+		
+		url = "http://rss.sina.com.cn/blog/index/feel.xml";
+		name = "新浪博客——情感";
 		insertFeed(activity, url, name);
+		
 		url = "http://comic.qq.com/news/rss_news.xml";
 		name = "腾讯动漫频道";
 		insertFeed(activity, url, name);
+		
 		url = "http://feed.mtime.com/movienews.rss";
 		name = "时光电影新闻";
 		insertFeed(activity, url, name);
+		
 		url = "http://feed.williamlong.info/";
 		name = "月光博客";
 		insertFeed(activity, url, name);
+		
 		url = "http://online.wsj.com/xml/rss/3_7085.xml";
 		name = "华尔街日报（世界新闻，英文）";
 		insertFeed(activity, url, name);

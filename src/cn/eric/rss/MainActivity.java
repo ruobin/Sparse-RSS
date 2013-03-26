@@ -32,12 +32,15 @@ import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.eric.rss.provider.FeedData;
-import cn.eric.rss.provider.OPML;
+import cn.eric.rss.data.DataHelper;
+import cn.eric.rss.data.FeedData;
+import cn.eric.rss.data.OPML;
 import cn.eric.rss.service.RefreshService;
+import cn.eric.rss.ui.DialogHelper;
 import cn.eric.rss.ui.MenuData;
 import cn.eric.rss.utility.ApplicationHelper;
 import cn.eric.rss.utility.MyStrings;
@@ -129,7 +132,7 @@ public class MainActivity extends SherlockActivityBase implements
 		listAdapter = new RSSOverviewListAdapter(this);
 
 		emptyView = this.findViewById(android.R.id.empty);
-		showEmptyView();
+		ApplicationHelper.showEmptyView(this, listAdapter, emptyView);
 		listView.setAdapter(listAdapter);
 		listView.setOnItemClickListener(this);
 
@@ -153,7 +156,7 @@ public class MainActivity extends SherlockActivityBase implements
 	}
 
 	private void initializeForFirstUse() {
-		
+
 		if (!ApplicationHelper.isMaidenVoyage(this)) {
 			return;
 		}
@@ -164,30 +167,6 @@ public class MainActivity extends SherlockActivityBase implements
 
 		ApplicationHelper.claimMaidenVoyage(this);
 
-	}
-
-	/**
-	 * decide whether to show the empty view
-	 */
-	private void showEmptyView() {
-		if (Looper.getMainLooper() == Looper.myLooper()) {
-			if ((listAdapter == null) || listAdapter.isEmpty()) {
-				emptyView.setVisibility(View.VISIBLE);
-			} else {
-				emptyView.setVisibility(View.GONE);
-			}
-		} else {
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					if ((listAdapter == null) || listAdapter.isEmpty()) {
-						emptyView.setVisibility(View.VISIBLE);
-					} else {
-						emptyView.setVisibility(View.GONE);
-					}
-				}
-			});
-		}
 	}
 
 	@Override
@@ -254,6 +233,7 @@ public class MainActivity extends SherlockActivityBase implements
 		subMenu.add(0, MenuData.MENUITEM_ADD_FEED, 0, R.string.menu_addfeed);
 		subMenu.add(0, MenuData.MENUITEM_REFRESH, 0, R.string.menu_refresh);
 		subMenu.add(0, MenuData.MENUITEM_SETTINGS, 0, R.string.menu_settings);
+		subMenu.add(0, MenuData.MENUITEM_FAVORITES, 0, R.string.favorites);
 		subMenu.add(0, MenuData.MENUITEM_MARK_ALL_AS_READ, 0,
 				R.string.menu_allread);
 		subMenu.add(0, MenuData.MENUITEM_ABOUT, 0, R.string.menu_about);
@@ -303,16 +283,19 @@ public class MainActivity extends SherlockActivityBase implements
 					ACTIVITY_APPLICATIONPREFERENCES_ID);
 			break;
 		}
+		case MenuData.MENUITEM_FAVORITES: {
+			startActivity(new Intent(this, FavoritesActivity.class));
+			break;
+		}
 		case MenuData.MENUITEM_MARK_ALL_AS_READ: {
 			new Thread() {
 				public void run() {
-					if (getContentResolver()
-							.update(FeedData.EntryColumns.CONTENT_URI,
-									getReadContentValues(),
-									new StringBuilder(
-											FeedData.EntryColumns.READDATE)
-											.append(MyStrings.DB_ISNULL)
-											.toString(), null) > 0) {
+					if (getContentResolver().update(
+							FeedData.EntryColumns.CONTENT_URI,
+							DataHelper.getReadContentValues(),
+							new StringBuilder(FeedData.EntryColumns.READDATE)
+									.append(MyStrings.DB_ISNULL).toString(),
+							null) > 0) {
 						getContentResolver().notifyChange(
 								FeedData.FeedColumns.CONTENT_URI, null);
 					}
@@ -406,39 +389,25 @@ public class MainActivity extends SherlockActivityBase implements
 
 	}
 
-	public static final ContentValues getReadContentValues() {
-		ContentValues values = new ContentValues();
-
-		values.put(FeedData.EntryColumns.READDATE, System.currentTimeMillis());
-		return values;
-	}
-
-	public static final ContentValues getUnreadContentValues() {
-		ContentValues values = new ContentValues();
-
-		values.putNull(FeedData.EntryColumns.READDATE);
-		return values;
-	}
-
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		Dialog dialog;
 
 		switch (id) {
 		case DIALOG_ERROR_FEEDIMPORT: {
-			dialog = createErrorDialog(R.string.error_feedimport);
+			dialog = DialogHelper.createErrorDialog(this, R.string.error_feedimport);
 			break;
 		}
 		case DIALOG_ERROR_FEEDEXPORT: {
-			dialog = createErrorDialog(R.string.error_feedexport);
+			dialog = DialogHelper.createErrorDialog(this, R.string.error_feedexport);
 			break;
 		}
 		case DIALOG_ERROR_INVALIDIMPORTFILE: {
-			dialog = createErrorDialog(R.string.error_invalidimportfile);
+			dialog = DialogHelper.createErrorDialog(this, R.string.error_invalidimportfile);
 			break;
 		}
 		case DIALOG_ERROR_EXTERNALSTORAGENOTAVAILABLE: {
-			dialog = createErrorDialog(R.string.error_externalstoragenotavailable);
+			dialog = DialogHelper.createErrorDialog(this, R.string.error_externalstoragenotavailable);
 			break;
 		}
 		case DIALOG_ABOUT: {
@@ -507,43 +476,6 @@ public class MainActivity extends SherlockActivityBase implements
 		return dialog;
 	}
 
-	private Dialog createErrorDialog(int messageId) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-		builder.setMessage(messageId);
-		builder.setTitle(R.string.error);
-		builder.setIcon(android.R.drawable.ic_dialog_alert);
-		builder.setPositiveButton(android.R.string.ok, null);
-		return builder.create();
-	}
-
-	static void showDeleteAllEntriesQuestion(final Context context,
-			final Uri uri) {
-		Builder builder = new AlertDialog.Builder(context);
-
-		builder.setIcon(android.R.drawable.ic_dialog_alert);
-		builder.setTitle(R.string.contextmenu_deleteallentries);
-		builder.setMessage(R.string.question_areyousure);
-		builder.setPositiveButton(android.R.string.yes,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						new Thread() {
-							public void run() {
-								FeedData.deletePicturesOfFeed(context, uri,
-										MyStrings.DB_EXCUDEFAVORITE);
-								if (context.getContentResolver().delete(uri,
-										MyStrings.DB_EXCUDEFAVORITE, null) > 0) {
-									context.getContentResolver().notifyChange(
-											FeedData.FeedColumns.CONTENT_URI,
-											null);
-								}
-							}
-						}.start();
-					}
-				});
-		builder.setNegativeButton(android.R.string.no, null);
-		builder.show();
-	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View view, int position,
@@ -734,7 +666,9 @@ public class MainActivity extends SherlockActivityBase implements
 									sendBroadcast(new Intent(
 											MyStrings.ACTION_UPDATEWIDGET));
 
-									showEmptyView();
+									ApplicationHelper.showEmptyView(
+											MainActivity.this, listAdapter,
+											emptyView);
 								}
 							}.start();
 						}
@@ -751,13 +685,12 @@ public class MainActivity extends SherlockActivityBase implements
 							.toString(((AdapterView.AdapterContextMenuInfo) item
 									.getMenuInfo()).id);
 
-					if (getContentResolver()
-							.update(FeedData.EntryColumns.CONTENT_URI(id),
-									getReadContentValues(),
-									new StringBuilder(
-											FeedData.EntryColumns.READDATE)
-											.append(MyStrings.DB_ISNULL)
-											.toString(), null) > 0) {
+					if (getContentResolver().update(
+							FeedData.EntryColumns.CONTENT_URI(id),
+							DataHelper.getReadContentValues(),
+							new StringBuilder(FeedData.EntryColumns.READDATE)
+									.append(MyStrings.DB_ISNULL).toString(),
+							null) > 0) {
 						getContentResolver().notifyChange(
 								FeedData.FeedColumns.CONTENT_URI(id), null);
 					}
@@ -774,7 +707,7 @@ public class MainActivity extends SherlockActivityBase implements
 
 					if (getContentResolver().update(
 							FeedData.EntryColumns.CONTENT_URI(id),
-							getUnreadContentValues(), null, null) > 0) {
+							DataHelper.getUnreadContentValues(), null, null) > 0) {
 						getContentResolver().notifyChange(
 								FeedData.FeedColumns.CONTENT_URI(id), null);
 						;
@@ -800,8 +733,8 @@ public class MainActivity extends SherlockActivityBase implements
 					Uri uri = FeedData.EntryColumns.CONTENT_URI(id);
 
 					String selection = MyStrings.READDATE_GREATERZERO
-							+ MyStrings.DB_AND + " (" + MyStrings.DB_EXCUDEFAVORITE
-							+ ")";
+							+ MyStrings.DB_AND + " ("
+							+ MyStrings.DB_EXCUDEFAVORITE + ")";
 
 					FeedData.deletePicturesOfFeed(MainActivity.this, uri,
 							selection);
@@ -814,11 +747,12 @@ public class MainActivity extends SherlockActivityBase implements
 			break;
 		}
 		case CONTEXTMENU_DELETEALLENTRIES_ID: {
-			showDeleteAllEntriesQuestion(
-					this,
-					FeedData.EntryColumns.CONTENT_URI(Long
-							.toString(((AdapterView.AdapterContextMenuInfo) item
-									.getMenuInfo()).id)));
+			ApplicationHelper
+					.showDeleteAllEntriesQuestion(
+							this,
+							FeedData.EntryColumns.CONTENT_URI(Long
+									.toString(((AdapterView.AdapterContextMenuInfo) item
+											.getMenuInfo()).id)));
 			break;
 		}
 		case CONTEXTMENU_RESETUPDATEDATE_ID: {
@@ -844,7 +778,7 @@ public class MainActivity extends SherlockActivityBase implements
 			break;
 		}
 		case R.id.menu_deleteallentries: {
-			showDeleteAllEntriesQuestion(this,
+			ApplicationHelper.showDeleteAllEntriesQuestion(this,
 					FeedData.EntryColumns.CONTENT_URI);
 			break;
 		}

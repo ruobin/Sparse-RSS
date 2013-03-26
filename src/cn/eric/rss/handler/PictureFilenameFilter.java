@@ -29,7 +29,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.regex.Pattern;
 
-import cn.eric.rss.provider.FeedDataContentProvider;
+import cn.eric.rss.data.FeedDataContentProvider;
 
 public class PictureFilenameFilter implements FilenameFilter {
 	private static final String REGEX = "__[^\\.]*\\.[A-Za-z]*";

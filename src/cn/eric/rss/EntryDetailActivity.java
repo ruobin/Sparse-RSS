@@ -61,7 +61,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.FeedData;
 import cn.eric.rss.ui.MenuData;
 import cn.eric.rss.ui.MyAnimations;
 import cn.eric.rss.utility.MyStrings;

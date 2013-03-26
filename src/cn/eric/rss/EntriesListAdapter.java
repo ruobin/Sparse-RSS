@@ -46,7 +46,7 @@ import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import cn.eric.rss.R;
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.FeedData;
 import cn.eric.rss.utility.MyStrings;
 
 public class EntriesListAdapter extends ResourceCursorAdapter {

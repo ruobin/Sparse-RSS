@@ -1,6 +1,6 @@
 package cn.eric.rss.utility;
 
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.FeedData;
 
 public final class MyStrings {
 

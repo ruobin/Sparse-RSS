@@ -40,7 +40,7 @@ import android.widget.RemoteViews;
 import cn.eric.rss.MainActivity;
 import cn.eric.rss.R;
 import cn.eric.rss.utility.MyStrings;
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.FeedData;
 
 public class MiniRSSAppWidgetProvider extends AppWidgetProvider {
 	private static final String LIMIT = " limit ";

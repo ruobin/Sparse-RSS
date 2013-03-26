@@ -53,7 +53,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.DataHelper;
+import cn.eric.rss.data.FeedData;
 import cn.eric.rss.ui.MenuData;
 import cn.eric.rss.utility.MyStrings;
 
@@ -183,7 +184,7 @@ public class EntriesListActivity extends SherlockActivityBase implements
 				// iconBytes = cursor.getBlob(2);
 			}
 			cursor.close();
-			if (title != null && title.length()>0) {
+			if (title != null && title.length() > 0) {
 				return title;
 			}
 		}
@@ -208,7 +209,7 @@ public class EntriesListActivity extends SherlockActivityBase implements
 	public boolean onContextItemSelected(final android.view.MenuItem item) {
 
 		switch (item.getItemId()) {
-	
+
 		case R.id.menu_hideread: {
 			if (item.isChecked()) {
 				item.setChecked(false).setTitle(R.string.contextmenu_hideread)
@@ -221,12 +222,12 @@ public class EntriesListActivity extends SherlockActivityBase implements
 			}
 			break;
 		}
-		
+
 		case CONTEXTMENU_MARKASREAD_ID: {
 			long id = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).id;
 
 			getContentResolver().update(ContentUris.withAppendedId(uri, id),
-					MainActivity.getReadContentValues(), null, null);
+					DataHelper.getReadContentValues(), null, null);
 			entriesListAdapter.markAsRead(id);
 			break;
 		}
@@ -234,7 +235,7 @@ public class EntriesListActivity extends SherlockActivityBase implements
 			long id = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).id;
 
 			getContentResolver().update(ContentUris.withAppendedId(uri, id),
-					MainActivity.getUnreadContentValues(), null, null);
+					DataHelper.getUnreadContentValues(), null, null);
 			entriesListAdapter.markAsUnread(id);
 			break;
 		}
@@ -264,10 +265,10 @@ public class EntriesListActivity extends SherlockActivityBase implements
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {		
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 
-		com.actionbarsherlock.view.Menu subMenu=getSubMenu(menu);
-		
+		com.actionbarsherlock.view.Menu subMenu = getSubMenu(menu);
+
 		subMenu.add(0, MenuData.MENUITEM_MARK_AS_READ, 0,
 				R.string.contextmenu_markasread);
 		subMenu.add(0, MenuData.MENUITEM_MARK_AS_UNREAD, 0,
@@ -280,7 +281,6 @@ public class EntriesListActivity extends SherlockActivityBase implements
 
 		return true;
 	}
-	
 
 	// @Override
 	// public boolean onCreateOptionsMenu(Menu menu) {
@@ -305,7 +305,7 @@ public class EntriesListActivity extends SherlockActivityBase implements
 			new Thread() { // the update process takes some time
 				public void run() {
 					getContentResolver().update(uri,
-							MainActivity.getReadContentValues(), null, null);
+							DataHelper.getReadContentValues(), null, null);
 				}
 			}.start();
 			entriesListAdapter.markAsRead();
@@ -315,7 +315,7 @@ public class EntriesListActivity extends SherlockActivityBase implements
 			new Thread() { // the update process takes some time
 				public void run() {
 					getContentResolver().update(uri,
-							MainActivity.getUnreadContentValues(), null, null);
+							DataHelper.getUnreadContentValues(), null, null);
 				}
 			}.start();
 			entriesListAdapter.markAsUnread();
@@ -326,8 +326,8 @@ public class EntriesListActivity extends SherlockActivityBase implements
 			new Thread() { // the delete process takes some time
 				public void run() {
 					String selection = MyStrings.READDATE_GREATERZERO
-							+ MyStrings.DB_AND + " (" + MyStrings.DB_EXCUDEFAVORITE
-							+ ")";
+							+ MyStrings.DB_AND + " ("
+							+ MyStrings.DB_EXCUDEFAVORITE + ")";
 
 					getContentResolver().delete(uri, selection, null);
 					FeedData.deletePicturesOfFeed(EntriesListActivity.this,

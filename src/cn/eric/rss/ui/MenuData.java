@@ -9,6 +9,7 @@ public class MenuData {
 	public static final int MENUITEM_ADD_FEED=1;
 	public static final int MENUITEM_REFRESH=2;
 	public static final int MENUITEM_SETTINGS=3;
+	public static final int MENUITEM_FAVORITES=21;
 	public static final int MENUITEM_MARK_ALL_AS_READ=4;
 	public static final int MENUITEM_ABOUT=5;
 	public static final int MENUITEM_MORE=6;

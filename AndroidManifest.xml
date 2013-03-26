@@ -48,8 +48,8 @@
         <service android:name="cn.eric.rss.service.FetcherService" />
 
         <provider
-            android:name="cn.eric.rss.provider.FeedDataContentProvider"
-            android:authorities="cn.eric.rss.provider.FeedData"
+            android:name="cn.eric.rss.data.FeedDataContentProvider"
+            android:authorities="cn.eric.rss.data.FeedData"
             android:readPermission="cn.eric.rss.READFEEDS"
             android:writePermission="cn.eric.rss.WRITEFEEDS" />
 
@@ -142,7 +142,7 @@
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="hiapk" />
+            android:value="develop" />
 
         <service
             android:name="com.umeng.common.net.DownloadingService"

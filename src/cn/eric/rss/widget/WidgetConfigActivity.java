@@ -39,7 +39,7 @@ import android.preference.PreferenceCategory;
 import android.view.View;
 import android.view.View.OnClickListener;
 import cn.eric.rss.R;
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.FeedData;
 
 public class WidgetConfigActivity extends PreferenceActivity {
 	private int widgetId;

@@ -3,7 +3,7 @@ package cn.eric.rss;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.eric.rss.R;
-import cn.eric.rss.provider.FeedData;
+import cn.eric.rss.data.FeedData;
 import cn.eric.rss.utility.MyStrings;
 import android.content.ContentValues;
 import android.database.Cursor;

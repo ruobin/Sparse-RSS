@@ -49,8 +49,8 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import cn.eric.rss.utility.MyStrings;
-import cn.eric.rss.provider.FeedData;
-import cn.eric.rss.provider.FeedDataContentProvider;
+import cn.eric.rss.data.FeedData;
+import cn.eric.rss.data.FeedDataContentProvider;
 import cn.eric.rss.service.FetcherService;
 
 public class RSSHandler extends DefaultHandler {
