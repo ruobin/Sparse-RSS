@@ -23,7 +23,7 @@
  *
  */
 
-package cn.eric.rss;
+package cn.eric.rss.adapter;
 
 import java.text.DateFormat;
 import java.util.Date;

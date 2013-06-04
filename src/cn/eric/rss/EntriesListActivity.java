@@ -53,6 +53,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import cn.eric.rss.adapter.EntriesListAdapter;
 import cn.eric.rss.data.DataHelper;
 import cn.eric.rss.data.FeedData;
 import cn.eric.rss.ui.MenuData;

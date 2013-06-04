@@ -255,8 +255,16 @@ public class FeedConfigActivity extends Activity {
 		name = "谷歌新闻";
 		insertFeed(activity, url, name);
 		
+		url = "http://www.titan24.com/rss.xml";
+		name = "体坛周报";
+		insertFeed(activity, url, name);
+		
 		url = "http://rss.sina.com.cn/blog/index/feel.xml";
 		name = "新浪博客——情感";
+		insertFeed(activity, url, name);
+		
+		url = "http://n.rss.qq.com/rss/tech_rss.php";
+		name = "腾讯科技频道";
 		insertFeed(activity, url, name);
 		
 		url = "http://comic.qq.com/news/rss_news.xml";

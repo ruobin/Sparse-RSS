@@ -5,13 +5,11 @@ import java.io.FilenameFilter;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
@@ -22,8 +20,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -32,10 +30,10 @@ import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.eric.rss.adapter.RSSOverviewListAdapter;
 import cn.eric.rss.data.DataHelper;
 import cn.eric.rss.data.FeedData;
 import cn.eric.rss.data.OPML;
@@ -48,7 +46,6 @@ import cn.eric.rss.utility.MyStrings;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -60,6 +57,8 @@ import com.umeng.update.UmengUpdateAgent;
  */
 public class MainActivity extends SherlockActivityBase implements
 		OnItemClickListener, OnCreateContextMenuListener {
+
+	private static final String TAG = MainActivity.class.getSimpleName();
 
 	public static MainActivity INSTANCE;
 
@@ -109,6 +108,8 @@ public class MainActivity extends SherlockActivityBase implements
 	private View emptyView;
 
 	public void onCreate(Bundle savedInstanceState) {
+
+		Log.d(TAG, "onCreate()");
 
 		super.onCreate(savedInstanceState);
 
@@ -171,10 +172,35 @@ public class MainActivity extends SherlockActivityBase implements
 
 	@Override
 	protected void onResume() {
+		Log.d(TAG, "onResume()");
 		super.onResume();
 		if (MainActivity.notificationManager != null) {
 			notificationManager.cancel(0);
 		}
+	}
+	
+	@Override
+	protected void onPause() {
+		Log.d(TAG, "onPause()");
+		super.onPause();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		Log.d(TAG, "onDestroy()");
+		super.onDestroy();
+	}
+	
+	@Override
+	protected void onRestart() {
+		Log.d(TAG, "onRestart()");
+		super.onRestart();
+	}
+	
+	@Override
+	protected void onStart() {
+		Log.d(TAG, "onStart()");
+		super.onStart();
 	}
 
 	@Override
@@ -395,19 +421,23 @@ public class MainActivity extends SherlockActivityBase implements
 
 		switch (id) {
 		case DIALOG_ERROR_FEEDIMPORT: {
-			dialog = DialogHelper.createErrorDialog(this, R.string.error_feedimport);
+			dialog = DialogHelper.createErrorDialog(this,
+					R.string.error_feedimport);
 			break;
 		}
 		case DIALOG_ERROR_FEEDEXPORT: {
-			dialog = DialogHelper.createErrorDialog(this, R.string.error_feedexport);
+			dialog = DialogHelper.createErrorDialog(this,
+					R.string.error_feedexport);
 			break;
 		}
 		case DIALOG_ERROR_INVALIDIMPORTFILE: {
-			dialog = DialogHelper.createErrorDialog(this, R.string.error_invalidimportfile);
+			dialog = DialogHelper.createErrorDialog(this,
+					R.string.error_invalidimportfile);
 			break;
 		}
 		case DIALOG_ERROR_EXTERNALSTORAGENOTAVAILABLE: {
-			dialog = DialogHelper.createErrorDialog(this, R.string.error_externalstoragenotavailable);
+			dialog = DialogHelper.createErrorDialog(this,
+					R.string.error_externalstoragenotavailable);
 			break;
 		}
 		case DIALOG_ABOUT: {
@@ -475,7 +505,6 @@ public class MainActivity extends SherlockActivityBase implements
 		}
 		return dialog;
 	}
-
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View view, int position,

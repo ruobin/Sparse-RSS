@@ -1,5 +1,6 @@
 package cn.eric.rss;
 
+import cn.eric.rss.adapter.RSSOverviewListAdapter;
 import cn.eric.rss.service.RefreshService;
 import cn.eric.rss.utility.ApplicationHelper;
 import cn.eric.rss.utility.MyStrings;
@@ -29,38 +30,8 @@ public class FavoritesActivity extends SherlockActivityBase implements
 
 	private static final int DIALOG_LICENSEAGREEMENT = 0; // save
 
-	private static final int DIALOG_ERROR_FEEDIMPORT = 3;
-
-	private static final int DIALOG_ERROR_FEEDEXPORT = 4;
-
-	private static final int DIALOG_ERROR_INVALIDIMPORTFILE = 5;
-
-	private static final int DIALOG_ERROR_EXTERNALSTORAGENOTAVAILABLE = 6;
-
-	private static final int DIALOG_ABOUT = 7;
-
-	private static final int CONTEXTMENU_EDIT_ID = 3;
-
-	private static final int CONTEXTMENU_REFRESH_ID = 4;
-
-	private static final int CONTEXTMENU_DELETE_ID = 5;
-
-	private static final int CONTEXTMENU_MARKASREAD_ID = 6;
-
-	private static final int CONTEXTMENU_MARKASUNREAD_ID = 7;
-
-	private static final int CONTEXTMENU_DELETEREAD_ID = 8;
-
-	private static final int CONTEXTMENU_DELETEALLENTRIES_ID = 9;
-
-	private static final int CONTEXTMENU_RESETUPDATEDATE_ID = 10;
-
-	private static final int ACTIVITY_APPLICATIONPREFERENCES_ID = 1;
-
 	private static final Uri CANGELOG_URI = Uri
 			.parse("http://code.google.com/p/MiniRSS/wiki/Changelog");
-
-	private static final int CONTEXTMENU_SETTINGS_ID = 99;
 
 	static NotificationManager notificationManager;
 
